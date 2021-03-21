@@ -30,7 +30,7 @@ class login extends StatelessWidget {
       backgroundColor: Color.fromRGBO(50, 57, 116, 1),
       body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(
+            child: Stack(
               children: <Widget>[
                 Column(
                   children: <Widget>[
@@ -139,17 +139,16 @@ class login extends StatelessWidget {
                     ),
                   ],
                 ),
-                Align(
-                    child: Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Terms & Conditions',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13
-                        ),
-                      ),
-                    )
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                  child: Text(
+                    'Terms & Conditions',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13
+                    ),
+                  ),
                 )
               ],
             ),
