@@ -6,6 +6,9 @@ import 'package:login_app/login/register.dart';
 import 'package:login_app/main/home.dart';
 
 class login extends StatelessWidget {
+
+  final myController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -44,8 +47,9 @@ class login extends StatelessWidget {
                 ),
                 //CineSeniC foto
                 Align(
-                  child: Image.network(
-                    'https://i.ibb.co/pjXW9D6/cinesenic.png',
+                  child: Image.asset(
+                    /*'https://i.ibb.co/pjXW9D6/cinesenic.png'*/
+                    'assets/cinesenic.png',
                     scale: 4,
                   ),
                   alignment: Alignment(0, -0.8),
@@ -69,23 +73,9 @@ class login extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
+
                 //Email Textfield
-                Container(
-                  width: double.infinity,
-                  child: TextField(
-                    obscureText: false,
-                    decoration: new InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 0.0),
-                        ),
-                        labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        )),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                MyEmail(myController: myController),
 
                 SizedBox(
                   height: 10,
@@ -176,6 +166,36 @@ class login extends StatelessWidget {
                 ))
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MyEmail extends StatelessWidget {
+  const MyEmail({
+    Key key,
+    @required this.myController,
+  }) : super(key: key);
+
+  final TextEditingController myController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: TextField(
+        controller: myController,
+        obscureText: false,
+        decoration: new InputDecoration(
+            enabledBorder: const UnderlineInputBorder(
+              borderSide:
+                  const BorderSide(color: Colors.white, width: 0.0),
+            ),
+            labelText: 'Email',
+            labelStyle: TextStyle(
+              color: Colors.white,
+            )),
+        style: TextStyle(color: Colors.white),
       ),
     );
   }

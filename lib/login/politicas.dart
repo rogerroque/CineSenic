@@ -5,7 +5,10 @@ class politicas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Politicas de Privacidad'),
+        title: Text(
+            'Privacy Politics'
+        ),
+        backgroundColor: Colors.orange,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
@@ -18,8 +21,9 @@ class politicas extends StatelessWidget {
                     'Terms and Conditions',
                     style: TextStyle(
                       fontSize: 30,
-                      color: Colors.blue,
+                      color: Colors.black,
                       decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold
                     ),
                   )),
               Container(
@@ -27,7 +31,8 @@ class politicas extends StatelessWidget {
                   margin: EdgeInsets.all(15),
                   child: Text(
                     'Cookies',
-                    style: TextStyle(fontSize: 20, color: Colors.orange),
+                    style: TextStyle(fontSize: 20, color: Colors.black,fontWeight: FontWeight.bold),
+
                   )),
               Container(
                   alignment: Alignment.centerLeft,
@@ -44,7 +49,7 @@ class politicas extends StatelessWidget {
                   margin: EdgeInsets.all(15),
                   child: Text(
                     'Privacy Policies',
-                    style: TextStyle(fontSize: 20, color: Colors.orange),
+                    style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                   )),
               Container(
                   alignment: Alignment.centerLeft,
@@ -61,7 +66,7 @@ class politicas extends StatelessWidget {
                   margin: EdgeInsets.all(15),
                   child: Text(
                     'Children\'s Information',
-                    style: TextStyle(fontSize: 20, color: Colors.orange),
+                    style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                   )),
               Container(
                   alignment: Alignment.centerLeft,
@@ -77,6 +82,7 @@ class politicas extends StatelessWidget {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
