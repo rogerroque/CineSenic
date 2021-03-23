@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "444271023686",
+    "project_id": "cinesenic-db",
+    "storage_bucket": "cinesenic-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444271023686:android:112c177d16ff1bbab89c47",
+        "android_client_info": {
+          "package_name": "com.example.login_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444271023686-kdok7t7fev9qrh7bt5nmm27r7v3opl3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-T4ep0BNmLkpYhfjGQ0WT1sgBEWb85dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444271023686-kdok7t7fev9qrh7bt5nmm27r7v3opl3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
