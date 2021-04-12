@@ -2,8 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/login/login.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
 }
 
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
         // Check for errors
         if (snapshot.hasError) {
           print('Error');
+          return login();
         }
 
         // Once complete, show your application

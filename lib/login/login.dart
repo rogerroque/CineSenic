@@ -4,14 +4,41 @@ import 'package:flutter/services.dart';
 import 'package:login_app/login/politicas.dart';
 import 'package:login_app/login/register.dart';
 import 'package:login_app/main/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class login extends StatelessWidget {
+class login extends StatefulWidget {
+  @override
+  _loginState createState() => _loginState();
+}
+
+class _loginState extends State<login> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  var email;
+  var password;
+  bool accepted = true;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    Future<UserCredential> signInWithGoogle() async {
+      try {
+        final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+        final GoogleSignInAuthentication googleAuth = await googleUser
+            .authentication;
+        final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        return await FirebaseAuth.instance.signInWithCredential(credential);
+      } on MissingPluginException catch (e) {
+        print(e.message);
+      }
+    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -73,6 +100,9 @@ class login extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: TextField(
+                    onChanged: (text) {
+                      email = text;
+                    },
                     obscureText: false,
                     decoration: new InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
@@ -95,6 +125,9 @@ class login extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: TextField(
+                    onChanged: (text) {
+                      password = text;
+                    },
                     obscureText: true,
                     decoration: new InputDecoration(
                         enabledBorder: const UnderlineInputBorder(
@@ -132,11 +165,25 @@ class login extends StatelessWidget {
                   child: MaterialButton(
                     minWidth: 200.0,
                     height: 40.0,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => home()),
-                      );
+                    onPressed: () async {
+                        try {
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: email,
+                              password: password
+                          );
+                          if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => home()),
+                            );
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                          }
+                        }
                     },
                     color: Color.fromRGBO(50, 57, 116, 1),
                     child: Text('LOGIN', style: TextStyle(color: Colors.white)),
@@ -152,11 +199,17 @@ class login extends StatelessWidget {
                 ),
 
                 Container(
-                  child: Image.network(
-                    'https://i.ibb.co/d6GsSCP/pngegg.png',
-                    scale: 25,
+                  child: InkWell (
+                    onTap: () {
+                      signInWithGoogle();
+                    },
+                    child: Image.asset(
+                      'assets/google.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  )
                   ),
-                ),
               ],
             ),
             Container(

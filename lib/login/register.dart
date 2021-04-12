@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/main/home.dart';
 
 class register extends StatefulWidget {
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   _registerState createState() => _registerState();
@@ -9,9 +12,14 @@ class register extends StatefulWidget {
 
 class _registerState extends State<register> {
   bool _showPassword = false;
+  var email = null;
+  var password = null;
 
   Widget _buildPasswordTextField() {
     return TextField(
+      onChanged: (text) {
+        password = text;
+      },
       obscureText: !this._showPassword,
       decoration: InputDecoration(
         enabledBorder: const UnderlineInputBorder(
@@ -115,6 +123,9 @@ class _registerState extends State<register> {
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
                 child: TextField(
+                  onChanged: (text) {
+                    email = text;
+                  },
                   obscureText: false,
                   decoration: new InputDecoration(
                       enabledBorder: const UnderlineInputBorder(
@@ -125,7 +136,8 @@ class _registerState extends State<register> {
                         color: Colors.white,
                       )
                   ),
-                  style: TextStyle(color: Colors.white),),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
 
               SizedBox(height: 20,),
@@ -142,7 +154,28 @@ class _registerState extends State<register> {
                 child: MaterialButton(
                   minWidth: 200.0,
                   height: 40.0,
-                  onPressed: () {},
+                  onPressed: () async {
+                      try {
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: email,
+                            password: password
+                        );
+                        if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => home()),
+                          );
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          print('The password provided is too weak.');
+                        } else if (e.code == 'email-already-in-use') {
+                          print('The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                  },
                   color: Color.fromARGB(250, 248, 125, 1),
                   child: Text('CREATE ACCOUNT', style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
