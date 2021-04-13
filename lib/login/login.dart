@@ -16,7 +16,9 @@ class _loginState extends State<login> {
   FirebaseAuth auth = FirebaseAuth.instance;
   var email;
   var password;
-  bool accepted = true;
+  bool accepted = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class _loginState extends State<login> {
       DeviceOrientation.portraitDown,
     ]);
 
+    // ignore: missing_return
     Future<UserCredential> signInWithGoogle() async {
       try {
         final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -34,6 +37,7 @@ class _loginState extends State<login> {
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
+        accepted = true;
         return await FirebaseAuth.instance.signInWithCredential(credential);
       } on MissingPluginException catch (e) {
         print(e.message);
@@ -200,9 +204,15 @@ class _loginState extends State<login> {
 
                 Container(
                   child: InkWell (
-                    onTap: () {
+                    onTap: () async {
                       signInWithGoogle();
-                    },
+                      if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
+                      }
+                      },
                     child: Image.asset(
                       'assets/google.png',
                       width: 50,
