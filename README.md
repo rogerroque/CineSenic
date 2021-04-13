@@ -1,6 +1,6 @@
-# login_app
+# CineSenic
 
-A new Flutter application.
+Una aplicacion para gestionar cines.
 
 ## Getting Started
 
