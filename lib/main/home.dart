@@ -1,162 +1,147 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/red_rounded_action_button.dart';
+import 'package:login_app/components//const.dart';
+import 'package:login_app/main/buy_ticket.dart';
+import 'package:login_app/components/background_gradient_image.dart';
+import 'package:login_app/components/movie_app_bar.dart';
+import 'package:login_app/components/primary_rounder_button.dart';
+import 'package:login_app/components/model.dart';
 
-class home extends StatelessWidget {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
-
+class home extends StatefulWidget {
+  int index = 1;
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: MaterialApp(
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Color.fromRGBO(50, 57, 116, 1),
-        key: scaffoldKey,
-        drawer: buildDrawer(),
-        body: Stack(children: <Widget>[
-          Positioned(
-            child: IconButton(
-              icon: Icon(Icons.menu, color: Colors.white),
-              onPressed: () => scaffoldKey.currentState.openDrawer(),
-            ),
-          ),
-          Container(
-              margin: const EdgeInsets.only(top: 60.0),
-              child: homeGenereMovieSelection()),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 110, 0, 0),
-            child: GridView.count(
-              crossAxisCount: 2,
-              scrollDirection: Axis.vertical,
-              mainAxisSpacing: 30,
-              children: <Widget>[
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-                Image.network(
-                    'https://playmax.xyz/img/c/400/1/1527927502/494.jpg'),
-                Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/91bBsCoK0rL._AC_SL1500_.jpg'),
-                Image.network(
-                    'https://ohsmagnet.com/wp-content/uploads/2019/04/unnamed-607x900.jpg'),
-                Image.network(
-                    'https://cdn11.bigcommerce.com/s-cw25miz5h3/images/stencil/1280x1280/products/286559/315166/9780241371664__95157.1560949081.jpg?c=2'),
-                Image.network(
-                    'https://i.pinimg.com/736x/44/80/b4/4480b4f6b88dc61359a7c33d9a3fb02a.jpg'),
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-                Image.network(
-                    'https://pics.filmaffinity.com/Fast_Furious_8-817339169-large.jpg'),
-              ],
-            ),
-          )
-        ]),
-      ),
-      debugShowCheckedModeBanner: false,
-    ));
-  }
+  _homeState createState() => _homeState();
 }
 
-class buildDrawer extends StatelessWidget {
+class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
-    return new Drawer(
-      child: new ListView(
+    final String backgroundImage = movies[widget.index].imageURL;
+    final String rating = movies[widget.index].rating.toString();
+    final String year = movies[widget.index].date.year.toString();
+    final String categories = movies[widget.index].categorires;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-          Text('Hola'),
-          Text('Hello'),
-          Text('Hallo'),
-          Text('Bonjour')
+          BackgroundGradientImage(
+            image: Image.network(
+              backgroundImage,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.all(10.0)),
+                MovieAppBar(),
+                Padding(padding: EdgeInsets.symmetric(vertical: 50.0)),
+                Image.asset(movies[widget.index].logo),
+                Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    PrimaryRoundedButton(
+                      text: rating,
+                      callback: () {},
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        year,
+                        style: kSmallMainTextStyle,
+                      ),
+                      Text('•', style: kPromaryColorTextStyle),
+                      Text(categories, style: kSmallMainTextStyle),
+                    ],
+                  ),
+                ),
+                Image.asset('assets/images/divider.png'),
+                RedRoundedActionButton(
+                    text: 'BUY TICKET',
+                    callback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BuyTicket(movies[widget.index].title),
+                        ),
+                      );
+                    }),
+                Expanded(
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: movies.length,
+                        itemBuilder: (context, index) {
+                          return MovieCard(
+                              title: movies[index].title,
+                              imageLink: movies[index].imageURL,
+                              active: index == widget.index ? true : false,
+                              callBack: () {
+                                setState(() {
+                                  widget.index = index;
+                                });
+                              });
+                        })),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-// ignore: camel_case_types
-class homeGenereMovieSelection extends StatelessWidget {
+class MovieCard extends StatelessWidget {
+  final String imageLink;
+
+  final String title;
+
+  final Function callBack;
+
+  final bool active;
+
+  MovieCard(
+      {@required this.title,
+        @required this.imageLink,
+        @required this.callBack,
+        @required this.active});
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: InkWell(
-                      child: Text(
-                        'Premieres',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  height: 50.0,
-                ),
-                SizedBox(
-                  width: 50.0,
-                ),
-                InkWell(
-                  child: Text(
-                    'Upcoming',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 50.0,
-                ),
-                InkWell(
-                  child: Text(
-                    'Kids',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 50.0,
-                ),
-                InkWell(
-                  child: Text(
-                    'Clasics',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 50.0,
-                ),
-                InkWell(
-                  child: Text(
-                    'Spanish movies',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white),
-                  ),
-                ),
-              ],
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: InkWell(
+            onTap: callBack,
+            child: SizedBox(
+              width: active
+                  ? MediaQuery.of(context).size.width / 3
+                  : MediaQuery.of(context).size.width / 4,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: Image.network(imageLink),
+              ),
             ),
           ),
         ),
+        Text(active ? title : '',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )),
+
       ],
     );
   }
