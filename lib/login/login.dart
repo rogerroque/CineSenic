@@ -28,7 +28,7 @@ class _loginState extends State<login> {
     ]);
 
     // ignore: missing_return
-    Future<UserCredential> signInWithGoogle() async {
+    /*Future<UserCredential> signInWithGoogle() async {
       try {
         final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
         final GoogleSignInAuthentication googleAuth = await googleUser
@@ -42,7 +42,7 @@ class _loginState extends State<login> {
       } on MissingPluginException catch (e) {
         print(e.message);
       }
-    }
+    }*/
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -165,7 +165,7 @@ class _loginState extends State<login> {
                   height: 30,
                 ),
 
-                Container(
+                /*Container(
                   child: MaterialButton(
                     minWidth: 200.0,
                     height: 40.0,
@@ -196,6 +196,24 @@ class _loginState extends State<login> {
                       side: BorderSide(color: Colors.white, width: 1),
                     ),
                   ),
+                ),*/
+                Container(
+                  child: MaterialButton(
+                    minWidth: 200.0,
+                    height: 40.0,
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => home()),
+                      );
+                    },
+                    color: Color.fromRGBO(50, 57, 116, 1),
+                    child: Text('LOGIN', style: TextStyle(color: Colors.white)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(color: Colors.white, width: 1),
+                    ),
+                  ),
                 ),
 
                 SizedBox(
@@ -205,7 +223,7 @@ class _loginState extends State<login> {
                 Container(
                   child: InkWell (
                     onTap: () async {
-                      signInWithGoogle();
+                      /*signInWithGoogle();*/
                       if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
                         Navigator.push(
                           context,
