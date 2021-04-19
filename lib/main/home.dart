@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/red_rounded_action_button.dart';
 import 'package:login_app/components//const.dart';
@@ -16,13 +17,38 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
+    List<Movie> movies;
+
+    void _loadMovies() {
+      FirebaseFirestore.instance.collection("Peliculas").get().then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          movies = [
+            Movie(
+              title: result.get("Name"),
+              categories: result.get("Gender"),
+              imageURL: result.get("Img"),
+              logo: result.get("Logo"),
+              rating: result.get("Rating"),
+              date: result.get("Year"),
+            )
+          ];
+          print(result.get("Name"));
+          print(result.get("Gender"));
+          print(result.get("Img"));
+          print(result.get("Logo"));
+          print(result.get("Rating"));
+          print(result.get("Year"));
+        });
+      });
+    }
+
     final String backgroundImage = movies[widget.index].imageURL;
     final String rating = movies[widget.index].rating.toString();
     final String year = movies[widget.index].date.year.toString();
-    final String categories = movies[widget.index].categorires;
+    final String categories = movies[widget.index].categories;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -45,7 +71,9 @@ class _homeState extends State<home> {
                   children: <Widget>[
                     PrimaryRoundedButton(
                       text: rating,
-                      callback: () {},
+                      callback: () {
+                        _loadMovies();
+                      },
                     ),
                   ],
                 ),
@@ -110,6 +138,7 @@ class MovieCard extends StatelessWidget {
 
   final bool active;
 
+
   MovieCard(
       {@required this.title,
         @required this.imageLink,
@@ -146,3 +175,5 @@ class MovieCard extends StatelessWidget {
     );
   }
 }
+
+

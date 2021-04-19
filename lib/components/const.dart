@@ -27,4 +27,4 @@ final BoxDecoration kRoundedFadedBorder = BoxDecoration(
     borderRadius: BorderRadius.circular(15.0));
 
 final ThemeData theme =
-    ThemeData.dark().copyWith(textTheme: GoogleFonts.barlowTextTheme());
+    ThemeData.dark().copyWith(textTheme: GoogleFonts.ralewayTextTheme());
