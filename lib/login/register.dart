@@ -47,10 +47,9 @@ class _registerState extends State<register> {
     return Scaffold(
       backgroundColor: Color.fromARGB(250, 248, 125, 1),
       body: SafeArea(
-        child:
-        SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
-            children: <Widget> [
+            children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(top: 5.0, left: 5.0),
                 child: IconButton(
@@ -60,11 +59,12 @@ class _registerState extends State<register> {
                     Navigator.pop(context);
                   },
                   iconSize: 35.0,
-                ),alignment: Alignment.topLeft,
+                ),
+                alignment: Alignment.topLeft,
               ),
-
-              SizedBox(height: 60,),
-
+              SizedBox(
+                height: 60,
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 15.0, left: 15.0),
                 child: Text(
@@ -73,14 +73,13 @@ class _registerState extends State<register> {
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0
-                  ),
+                      letterSpacing: 5.0),
                 ),
                 alignment: Alignment.centerLeft,
               ),
-
-              SizedBox(height: 50,),
-
+              SizedBox(
+                height: 50,
+              ),
               Container(
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
@@ -88,18 +87,19 @@ class _registerState extends State<register> {
                   obscureText: false,
                   decoration: new InputDecoration(
                       enabledBorder: const UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white, width: 0.0),
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 0.0),
                       ),
                       labelText: 'First Name',
                       labelStyle: TextStyle(
                         color: Colors.white,
-                      )
-                  ),
-                  style: TextStyle(color: Colors.white),),
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
@@ -107,18 +107,19 @@ class _registerState extends State<register> {
                   obscureText: false,
                   decoration: new InputDecoration(
                       enabledBorder: const UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white, width: 0.0),
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 0.0),
                       ),
                       labelText: 'Last Name',
                       labelStyle: TextStyle(
                         color: Colors.white,
-                      )
-                  ),
-                  style: TextStyle(color: Colors.white),),
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
@@ -129,71 +130,65 @@ class _registerState extends State<register> {
                   obscureText: false,
                   decoration: new InputDecoration(
                       enabledBorder: const UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white, width: 0.0),
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 0.0),
                       ),
                       labelText: 'Email',
                       labelStyle: TextStyle(
                         color: Colors.white,
-                      )
-                  ),
+                      )),
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
                 child: _buildPasswordTextField(),
               ),
-
-              SizedBox(height: 60,),
-
+              SizedBox(
+                height: 60,
+              ),
               Container(
                 child: MaterialButton(
                   minWidth: 200.0,
                   height: 40.0,
                   onPressed: () async {
-                      try {
-                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: email, password: password);
+                      if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
                         );
-                        if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => home()),
-                          );
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          print('The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
-                          print('The account already exists for that email.');
-                        }
-                      } catch (e) {
-                        print(e);
                       }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        print('The password provided is too weak.');
+                      } else if (e.code == 'email-already-in-use') {
+                        print('The account already exists for that email.');
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   color: Color.fromARGB(250, 248, 125, 1),
-                  child: Text('CREATE ACCOUNT', style: TextStyle(color: Colors.white)),
+                  child: Text('CREATE ACCOUNT',
+                      style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                     side: BorderSide(color: Colors.white, width: 1),
                   ),
                 ),
               ),
-
             ],
           ),
         ),
-      )
-
-
-
-      ,
+      ),
     );
   }
 }
-

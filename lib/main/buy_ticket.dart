@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:login_app/components/calendar_day.dart';
 import 'package:login_app/components/cienma_seat.dart';
 import 'package:login_app/components/show_time.dart';
@@ -6,6 +7,13 @@ import 'package:login_app/components/const.dart';
 
 class BuyTicket extends StatelessWidget {
   var title;
+  int day0 = DateTime.now().day;
+  int day1 = DateTime.now().day + 1;
+  int day2 = DateTime.now().day + 2;
+  int day3 = DateTime.now().day + 3;
+  int day4 = DateTime.now().day + 4;
+  int day5 = DateTime.now().day + 5;
+  int day6 = DateTime.now().day + 6;
 
   BuyTicket(this.title);
 
@@ -67,25 +75,33 @@ class BuyTicket extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       CalendarDay(
-                        dayNumber: '9',
-                        dayAbbreviation: 'TH',
+                        dayNumber: day0.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now())
                       ),
                       CalendarDay(
-                        dayNumber: '10',
-                        dayAbbreviation: 'FR',
+                        dayNumber: day1.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 1))),
                       ),
                       CalendarDay(
-                        dayNumber: '11',
-                        dayAbbreviation: 'SA',
+                        dayNumber: day2.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 2))),
                       ),
                       CalendarDay(
-                        dayNumber: '12',
-                        dayAbbreviation: 'SU',
+                        dayNumber: day3.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 3))),
                         isActive: true,
                       ),
                       CalendarDay(
-                        dayNumber: '13',
-                        dayAbbreviation: 'MO',
+                        dayNumber: day4.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 4))),
+                      ),
+                      CalendarDay(
+                        dayNumber: day5.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 5))),
+                      ),
+                      CalendarDay(
+                        dayNumber: day6.toString(),
+                        dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: 6))),
                       ),
                     ],
                   ),
@@ -102,12 +118,12 @@ class BuyTicket extends StatelessWidget {
                     isActive: false,
                   ),
                   ShowTime(
-                    time: '12:30',
+                    time: '11:30',
                     price: 10,
-                    isActive: true,
+                    isActive: false,
                   ),
                   ShowTime(
-                    time: '12:30',
+                    time: '12:00',
                     price: 10,
                     isActive: false,
                   ),
@@ -117,8 +133,8 @@ class BuyTicket extends StatelessWidget {
                     isActive: false,
                   ),
                   ShowTime(
-                    time: '12:30',
-                    price: 10,
+                    time: '13:00',
+                    price: 15,
                     isActive: false,
                   ),
                 ],
