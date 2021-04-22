@@ -30,6 +30,11 @@ class App extends StatelessWidget {
               logo: result.get("Logo"),
               rating: double.parse(result.get("Rating")),
               date: DateTime(int.parse(result.get("Year"))),
+              director: result.get("Director"),
+              actor: result.get("Actor"),
+              synopsis: result.get("Synopsis"),
+              price: result.get("Price"),
+              videoURL: result.get("Trailer")
             ),
           );
           print(result.get("Name"));

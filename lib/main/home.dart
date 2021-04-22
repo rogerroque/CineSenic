@@ -9,7 +9,7 @@ import 'package:login_app/components/model.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class home extends StatefulWidget {
-  int index = 1;
+  int index = 0;
 
   @override
   _homeState createState() => _homeState();
@@ -79,7 +79,7 @@ class _homeState extends State<home> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  BuyTicket(movies[widget.index].title),
+                                  BuyTicket(movies[widget.index].title, movies[widget.index].price, movies[widget.index].director, movies[widget.index].actor, movies[widget.index].synopsis, movies[widget.index].videoURL),
                             ),
                           );
                         }),
