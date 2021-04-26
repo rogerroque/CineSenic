@@ -1,24 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:login_app/login/politicas.dart';
 import 'package:login_app/login/register.dart';
 import 'package:login_app/main/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-import 'file:///C:/Users/roger/Desktop/CineSenic/lib/Classes/politicas.dart';
-
+// ignore: camel_case_types
 class login extends StatefulWidget {
   @override
   _loginState createState() => _loginState();
 }
 
+// ignore: camel_case_types
 class _loginState extends State<login> {
   FirebaseAuth auth = FirebaseAuth.instance;
   var email;
   var password;
   bool accepted = false;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class _loginState extends State<login> {
     ]);
 
     // ignore: missing_return
-    /*Future<UserCredential> signInWithGoogle() async {
+    Future<UserCredential> signInWithGoogle() async {
       try {
         final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication googleAuth = await googleUser
-            .authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
         final GoogleAuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
@@ -42,7 +42,7 @@ class _loginState extends State<login> {
       } on MissingPluginException catch (e) {
         print(e.message);
       }
-    }*/
+    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -63,21 +63,27 @@ class _loginState extends State<login> {
         backgroundColor: Color.fromRGBO(212, 175, 55, 1),
       ),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromRGBO(14, 56, 55, 1.0),
-      body: SafeArea(
+      backgroundColor: Color.fromRGBO(50, 57, 116, 1),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Stack(
             children: <Widget>[
               Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 60,
+                  ),
                   //CineSeniC foto
-                  Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 60),
-                    child: Align(
-                      child: Image.asset('assets/img/CineSenicLogo.png', width: 120,),
-                      alignment: Alignment(0, -0.8),
+                  Align(
+                    child: Image.network(
+                      'https://i.ibb.co/pjXW9D6/cinesenic.png',
+                      scale: 4,
                     ),
+                    alignment: Alignment(0, -0.8),
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
 
                   Container(
@@ -105,8 +111,8 @@ class _loginState extends State<login> {
                       obscureText: false,
                       decoration: new InputDecoration(
                           enabledBorder: const UnderlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 0.0),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 0.0),
                           ),
                           labelText: 'Email',
                           labelStyle: TextStyle(
@@ -130,8 +136,8 @@ class _loginState extends State<login> {
                       obscureText: true,
                       decoration: new InputDecoration(
                           enabledBorder: const UnderlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 0.0),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 0.0),
                           ),
                           labelText: 'Password',
                           labelStyle: TextStyle(
@@ -160,50 +166,34 @@ class _loginState extends State<login> {
                     height: 30,
                   ),
 
-                  /*Container(
-                    child: MaterialButton(
-                      minWidth: 200.0,
-                      height: 40.0,
-                      onPressed: () async {
-                          try {
-                            await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                email: email,
-                                password: password
-                            );
-                            if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => home()),
-                              );
-                            }
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'user-not-found') {
-                              print('No user found for that email.');
-                            } else if (e.code == 'wrong-password') {
-                              print('Wrong password provided for that user.');
-                            }
-                          }
-                      },
-                      color: Color.fromRGBO(50, 57, 116, 1),
-                      child: Text('LOGIN', style: TextStyle(color: Colors.white)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.white, width: 1),
-                      ),
-                    ),
-                  ),*/
                   Container(
                     child: MaterialButton(
                       minWidth: 200.0,
                       height: 40.0,
                       onPressed: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => home()),
-                        );
+                        try {
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: email, password: password);
+                          if (FirebaseAuth.instance
+                              .idTokenChanges()
+                              .isBroadcast) {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => home()),
+                            );
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                          }
+                        }
                       },
                       color: Color.fromRGBO(50, 57, 116, 1),
-                      child: Text('LOGIN', style: TextStyle(color: Colors.white)),
+                      child:
+                          Text('LOGIN', style: TextStyle(color: Colors.white)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide(color: Colors.white, width: 1),
@@ -216,40 +206,40 @@ class _loginState extends State<login> {
                   ),
 
                   Container(
-                    child: InkWell (
-                      onTap: () async {
-                        /*signInWithGoogle();*/
-                        if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => home()),
-                          );
-                        }
-                        },
-                      child: Image.asset(
-                        'assets/img/google.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                    )
-                    ),
-                ],
-              ),
-              Container(
-                  alignment: Alignment.bottomLeft,
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => politicas()),
-                      );
+                      child: InkWell(
+                    onTap: () async {
+                      signInWithGoogle();
+                      if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
+                      }
                     },
-                    child: Text(
-                      'Terms & Conditions',
-                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    child: Image.asset(
+                      'assets/google.png',
+                      width: 50,
+                      height: 50,
                     ),
                   )),
+                  Container(
+                      alignment: Alignment.bottomLeft,
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => politicas()),
+                          );
+                        },
+                        child: Text(
+                          'Terms & Conditions',
+                          style: TextStyle(color: Colors.white, fontSize: 13),
+                        ),
+                      ))
+                ],
+              ),
             ],
           ),
         ),
