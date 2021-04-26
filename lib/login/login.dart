@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login_app/login/politicas.dart';
+import 'package:login_app/Classes/politicas.dart';
 import 'package:login_app/login/register.dart';
 import 'package:login_app/main/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
