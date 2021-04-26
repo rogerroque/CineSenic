@@ -47,8 +47,7 @@ class _registerState extends State<register> {
     return Scaffold(
       backgroundColor: Color.fromARGB(250, 248, 125, 1),
       body: SafeArea(
-        child:
-        SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             children: <Widget> [
               Container(

@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/Classes/drawer.dart';
 
 class home extends StatelessWidget {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Color.fromRGBO(50, 57, 116, 1),
-        key: scaffoldKey,
-        drawer: buildDrawer(),
-        body: Stack(children: <Widget>[
+    resizeToAvoidBottomInset: false,
+    backgroundColor: Color.fromRGBO(50, 57, 116, 1),
+    key: scaffoldKey,
+    drawer: buildDrawer(),
+    body: SafeArea(
+      child: Container(
+        child: Stack(children: <Widget>[
           Positioned(
             child: IconButton(
               icon: Icon(Icons.menu, color: Colors.white),
@@ -57,8 +59,10 @@ class home extends StatelessWidget {
           )
         ]),
       ),
+    ),
+      ),
       debugShowCheckedModeBanner: false,
-    ));
+    );
   }
 }
 
@@ -66,14 +70,7 @@ class buildDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Drawer(
-      child: new ListView(
-        children: <Widget>[
-          Text('Hola'),
-          Text('Hello'),
-          Text('Hallo'),
-          Text('Bonjour')
-        ],
-      ),
+      child: drawer()
     );
   }
 }
