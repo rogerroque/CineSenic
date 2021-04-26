@@ -21,8 +21,6 @@ class BuyTicket extends StatelessWidget {
   int day2 = DateTime.now().day + 2;
   int day3 = DateTime.now().day + 3;
   int day4 = DateTime.now().day + 4;
-  int day5 = DateTime.now().day + 5;
-  int day6 = DateTime.now().day + 6;
 
   BuyTicket(this.title, this.price, this.director, this.actor, this.synopsis,
       this.videoURL);
@@ -175,7 +173,9 @@ class BuyTicket extends StatelessWidget {
                           CalendarDay(
                               dayNumber: day0.toString(),
                               dayAbbreviation:
-                                  DateFormat('E').format(DateTime.now())),
+                                  DateFormat('E').format(DateTime.now()),
+                              isActive: true,
+                          ),
                           CalendarDay(
                             dayNumber: day1.toString(),
                             dayAbbreviation: DateFormat('E')
@@ -190,22 +190,11 @@ class BuyTicket extends StatelessWidget {
                             dayNumber: day3.toString(),
                             dayAbbreviation: DateFormat('E')
                                 .format(DateTime.now().add(Duration(days: 3))),
-                            isActive: true,
                           ),
                           CalendarDay(
                             dayNumber: day4.toString(),
                             dayAbbreviation: DateFormat('E')
                                 .format(DateTime.now().add(Duration(days: 4))),
-                          ),
-                          CalendarDay(
-                            dayNumber: day5.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 5))),
-                          ),
-                          CalendarDay(
-                            dayNumber: day6.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 6))),
                           ),
                         ],
                       ),
