@@ -11,26 +11,26 @@ class CalendarDay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      padding: const EdgeInsets.only(left: 10, right: 15),
       child: Container(
         width: 50.0,
-        height: 65.0,
+        height: 55.0,
         decoration: BoxDecoration(
             color: isActive ? kPimaryColor : null,
-            borderRadius: BorderRadius.circular(15.0)),
+            borderRadius: BorderRadius.circular(5.0)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(dayNumber,
                 style: TextStyle(
                     color: isActive ? kBackgroundColor : Colors.white,
-                    fontSize: 25.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold)),
             Text(
               dayAbbreviation.toUpperCase(),
               style: TextStyle(
                 color: isActive ? kBackgroundColor : Colors.white12,
-                fontSize: 20.0,
+                fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),

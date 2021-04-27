@@ -30,12 +30,12 @@ class _ShowTimeState extends State<ShowTime> {
         });
       },
       child: Container(
-        margin: EdgeInsets.all(15.0),
+        margin: EdgeInsets.only(left: 10, top: 20, bottom: 30),
         padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
         decoration: BoxDecoration(
             border: Border.all(
                 color: widget.isActive ? kPimaryColor : Colors.white12),
-            borderRadius: BorderRadius.circular(15.0)),
+            borderRadius: BorderRadius.circular(10.0)),
         child: Column(
           children: <Widget>[
             Text(
