@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 import 'const.dart';
 
-class CienmaSeat extends StatefulWidget {
+class CinemaSeat extends StatefulWidget {
   bool isReserved;
 
   bool isSelected;
 
-  CienmaSeat({this.isSelected = false, this.isReserved = false});
+  CinemaSeat({this.isSelected = false, this.isReserved = false});
 
   @override
-  _CienmaSeatState createState() => _CienmaSeatState();
+  _CinemaSeatState createState() => _CinemaSeatState();
 }
 
-class _CienmaSeatState extends State<CienmaSeat> {
+class _CinemaSeatState extends State<CinemaSeat> {
   @override
   Widget build(BuildContext context) {
     return InkWell(

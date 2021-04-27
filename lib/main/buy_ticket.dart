@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/components/calendar_day.dart';
-import 'package:login_app/components/cienma_seat.dart';
-import 'package:login_app/components/const.dart';
+import 'package:login_app/components/cinema_seat.dart';
 import 'package:login_app/components/show_time.dart';
+import 'package:login_app/components/const.dart';
+import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class BuyTicket extends StatelessWidget {
@@ -13,6 +15,7 @@ class BuyTicket extends StatelessWidget {
   var actor;
   var synopsis;
   var videoURL;
+  var pay;
 
   int day0 = DateTime.now().day;
   int day1 = DateTime.now().day + 1;
@@ -25,6 +28,7 @@ class BuyTicket extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    pay = '0';
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
@@ -190,17 +194,16 @@ class BuyTicket extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: <Widget>[
                           CalendarDay(
-                              dayNumber: day0.toString(),
-                              dayAbbreviation:
-                                  DateFormat('E').format(DateTime.now()),
-                              isActive: true,
+                            dayNumber: day0.toString(),
+                            dayAbbreviation:
+                                DateFormat('E').format(DateTime.now()),
+                            isActive: false,
                           ),
                           CalendarDay(
                             dayNumber: day1.toString(),
@@ -260,136 +263,44 @@ class BuyTicket extends StatelessWidget {
                   ),
                 ),
                 Center(child: Image.asset('assets/images/screen.png')),
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      children: <Widget>[
-                        // First Seat Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20),
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20),
-                            ),
-                          ],
-                        ),
-                        // Second Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                          ],
-                        ),
-                        // Third  Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                          ],
-                        ),
-                        // 4TH Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                          ],
-                        ),
-                        // 5TH Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                          ],
-                        ),
-                        // 6TH Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                          ],
-                        ),
-                        // final Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20),
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20) * 2,
-                            ),
-                            CienmaSeat(),
-                            CienmaSeat(),
-                            SizedBox(
-                              width: (MediaQuery.of(context).size.width / 20),
-                            ),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection("Filas")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
 
-                          ],
-                        ),
-                      ],
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                    ),
-                  ),
+                        return Column(
+                          children: snapshot.data.docs.map((document) {
+                            return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: (MediaQuery.of(context).size.width / 20),
+                                  ),
+                                  for (var i = 0; i <= document.data()['ButacasIzq'] - 1; i++) CinemaSeat(),
+                                  SizedBox(
+                                    width: (MediaQuery.of(context).size.width / 20) * 2,
+                                  ),
+                                  for (var i = 0; i <= document.data()['ButacasDer'] - 1; i++) CinemaSeat(),
+                                  SizedBox(
+                                    width: (MediaQuery.of(context).size.width / 20),
+                                  ),
+                                ]
+                            );
+                          }).toList(),
+                        );
+                      }),
                 ),
 
                 Container(
@@ -400,7 +311,7 @@ class BuyTicket extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 25.0),
                         child: Text(
-                          price + "€",
+                          pay + "€",
                           style: TextStyle(
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold,
