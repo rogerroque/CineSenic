@@ -5,7 +5,6 @@ import 'package:login_app/components/calendar_day.dart';
 import 'package:login_app/components/cinema_seat.dart';
 import 'package:login_app/components/show_time.dart';
 import 'package:login_app/components/const.dart';
-import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class BuyTicket extends StatelessWidget {
@@ -73,10 +72,6 @@ class BuyTicket extends StatelessWidget {
                     progressIndicatorColor: Colors.white,
                   ),
                 ),
-                // ESTO ES LO QUE TIENES QUE DECORAR ROQUE,
-                // DESDE AQUI HASTA LA LINEA 166, ES LO DEL DIRECTOR, ACTOR, SINOPSIS,
-                // ENCIMA DE ESTO ESTA EL VIDEO DE YOUTUBE POR SI QUIERES TOQUETEAR TODO
-
                 Container(
                   margin: EdgeInsets.only(top: 20, left: 10),
                   child: Column(
@@ -112,7 +107,7 @@ class BuyTicket extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Jordi',
+                              director,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.white
@@ -141,7 +136,7 @@ class BuyTicket extends StatelessWidget {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Jordi, Teemo, Roger, Daniel, Antonio, Gerardo, Elvis',
+                              actor,
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white
