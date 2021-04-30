@@ -68,160 +68,159 @@ class _loginState extends State<login> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                //CineSeniC foto
-                Container(
-                  margin: EdgeInsets.only(top: 70, bottom: 70),
-                  child: Align(
-                    child: Image.asset(
-                      'assets/img/CineSenicLogo.png',
-                      scale: 8,
-                    ),
-                    alignment: Alignment(0, -0.8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              //CineSeniC foto
+              Container(
+                margin: EdgeInsets.only(top: 70, bottom: 70),
+                child: Align(
+                  child: Image.asset(
+                    'assets/img/CineSenicLogo.png',
+                    scale: 8,
                   ),
+                  alignment: Alignment(0, -0.8),
                 ),
+              ),
 
-                Container(
-                  child: Text(
-                    'LOGIN',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0),
-                  ),
-                  alignment: Alignment.centerLeft,
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-                //Email Textfield
-                Container(
-                  width: double.infinity,
-                  child: TextField(
-                    onChanged: (text) {
-                      email = text;
-                    },
-                    obscureText: false,
-                    decoration: new InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 0.0),
-                        ),
-                        labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        )),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 10,
-                ),
-
-                //Password Textfield
-                Container(
-                  width: double.infinity,
-                  child: TextField(
-                    onChanged: (text) {
-                      password = text;
-                    },
-                    obscureText: true,
-                    decoration: new InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 0.0),
-                        ),
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        )),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
+              Container(
+                child: Text(
+                  'LOGIN',
+                  style: TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12,
-                    ),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+
+              SizedBox(
+                height: 30,
+              ),
+              //Email Textfield
+              Container(
+                width: double.infinity,
+                child: TextField(
+                  onChanged: (text) {
+                    email = text;
+                  },
+                  obscureText: false,
+                  decoration: new InputDecoration(
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.white, width: 0.0),
+                      ),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              //Password Textfield
+              Container(
+                width: double.infinity,
+                child: TextField(
+                  onChanged: (text) {
+                    password = text;
+                  },
+                  obscureText: true,
+                  decoration: new InputDecoration(
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.white, width: 0.0),
+                      ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+
+              SizedBox(
+                height: 12,
+              ),
+              Container(
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12,
                   ),
-                  alignment: Alignment.centerRight,
                 ),
+                alignment: Alignment.centerRight,
+              ),
 
-                SizedBox(
-                  height: 30,
+              SizedBox(
+                height: 30,
+              ),
+
+              Container(
+                child: MaterialButton(
+                  minWidth: 200.0,
+                  height: 40.0,
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (FirebaseAuth.instance
+                          .idTokenChanges()
+                          .isBroadcast) {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        print('No user found for that email.');
+                      } else if (e.code == 'wrong-password') {
+                        print('Wrong password provided for that user.');
+                      }
+                    }
+                  },
+                  color: Color.fromRGBO(50, 57, 116, 1),
+                  child:
+                  Text('LOGIN', style: TextStyle(color: Colors.white)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    side: BorderSide(color: Colors.white, width: 1),
+                  ),
                 ),
+              ),
 
-                Container(
-                  child: MaterialButton(
-                    minWidth: 200.0,
-                    height: 40.0,
-                    onPressed: () async {
-                      try {
-                        await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                            email: email, password: password);
-                        if (FirebaseAuth.instance
-                            .idTokenChanges()
-                            .isBroadcast) {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => home()),
-                          );
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          print('No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
-                          print('Wrong password provided for that user.');
-                        }
+              SizedBox(
+                height: 10,
+              ),
+
+              Container(
+                  child: InkWell(
+                    onTap: () async {
+                      signInWithGoogle();
+                      if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
                       }
                     },
-                    color: Color.fromRGBO(50, 57, 116, 1),
-                    child:
-                    Text('LOGIN', style: TextStyle(color: Colors.white)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(color: Colors.white, width: 1),
+                    child: Image.asset(
+                      'assets/img/google.png',
+                      width: 50,
+                      height: 50,
                     ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 10,
-                ),
-
-                Container(
-                    child: InkWell(
-                      onTap: () async {
-                        signInWithGoogle();
-                        if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => home()),
-                          );
-                        }
-                      },
-                      child: Image.asset(
-                        'assets/img/google.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                    )),
+                  )),
 
                 Container(
                   child: InkWell(
@@ -232,10 +231,8 @@ class _loginState extends State<login> {
                       Navigator.push(context, MaterialPageRoute(builder: (context ) => summary_order()))
                     },
                   ),
-                ),
 
-              ],
-            ),
+                )],
           ),
         ),
       ),
