@@ -5,10 +5,11 @@ import 'const.dart';
 
 class CinemaSeat extends StatefulWidget {
   bool isReserved;
-
   bool isSelected;
+  var onTap2;
+  var butaca;
 
-  CinemaSeat({this.isSelected = false, this.isReserved = false});
+  CinemaSeat({this.isSelected = false, this.isReserved = false, this.onTap2, this.butaca});
 
   @override
   _CinemaSeatState createState() => _CinemaSeatState();
@@ -21,8 +22,11 @@ class _CinemaSeatState extends State<CinemaSeat> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
+
         setState(() {
           !widget.isReserved ? widget.isSelected = !widget.isSelected : null;
+          widget.onTap2(widget.isSelected, widget.butaca);
+
         });
       },
       child: Container(

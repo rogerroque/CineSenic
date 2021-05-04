@@ -33,7 +33,7 @@ class App extends StatelessWidget {
               director: result.get("Director"),
               actor: result.get("Actor"),
               synopsis: result.get("Synopsis"),
-              price: result.get("Price"),
+              price: double.parse(result.get("Price")),
               videoURL: result.get("Trailer")
             ),
           );
