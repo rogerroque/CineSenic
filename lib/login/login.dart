@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login_app/Classes/politicas.dart';
+import 'package:login_app/Classes/summary_order.dart';
 import 'package:login_app/login/register.dart';
 import 'package:login_app/main/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,146 +68,144 @@ class _loginState extends State<login> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 60,
+              //CineSeniC foto
+              Container(
+                margin: EdgeInsets.only(top: 70, bottom: 70),
+                child: Align(
+                  child: Image.asset(
+                    'assets/img/CineSenicLogo.png',
+                    scale: 8,
                   ),
-                  //CineSeniC foto
-                  Align(
-                    child: Image.network(
-                      'https://i.ibb.co/pjXW9D6/cinesenic.png',
-                      scale: 4,
-                    ),
-                    alignment: Alignment(0, -0.8),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  alignment: Alignment(0, -0.8),
+                ),
+              ),
 
-                  Container(
-                    child: Text(
-                      'LOGIN',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 5.0),
-                    ),
-                    alignment: Alignment.centerLeft,
-                  ),
+              Container(
+                child: Text(
+                  'LOGIN',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0),
+                ),
+                alignment: Alignment.centerLeft,
+              ),
 
-                  SizedBox(
-                    height: 30,
-                  ),
-                  //Email Textfield
-                  Container(
-                    width: double.infinity,
-                    child: TextField(
-                      onChanged: (text) {
-                        email = text;
-                      },
-                      obscureText: false,
-                      decoration: new InputDecoration(
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 0.0),
-                          ),
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10,
-                  ),
-
-                  //Password Textfield
-                  Container(
-                    width: double.infinity,
-                    child: TextField(
-                      onChanged: (text) {
-                        password = text;
-                      },
-                      obscureText: true,
-                      decoration: new InputDecoration(
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 0.0),
-                          ),
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          )),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
+              SizedBox(
+                height: 30,
+              ),
+              //Email Textfield
+              Container(
+                width: double.infinity,
+                child: TextField(
+                  onChanged: (text) {
+                    email = text;
+                  },
+                  obscureText: false,
+                  decoration: new InputDecoration(
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.white, width: 0.0),
+                      ),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              //Password Textfield
+              Container(
+                width: double.infinity,
+                child: TextField(
+                  onChanged: (text) {
+                    password = text;
+                  },
+                  obscureText: true,
+                  decoration: new InputDecoration(
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.white, width: 0.0),
                       ),
-                    ),
-                    alignment: Alignment.centerRight,
-                  ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      )),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
 
-                  SizedBox(
-                    height: 30,
+              SizedBox(
+                height: 12,
+              ),
+              Container(
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12,
                   ),
+                ),
+                alignment: Alignment.centerRight,
+              ),
 
-                  Container(
-                    child: MaterialButton(
-                      minWidth: 200.0,
-                      height: 40.0,
-                      onPressed: () async {
-                        try {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-                          if (FirebaseAuth.instance
-                              .idTokenChanges()
-                              .isBroadcast) {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => home()),
-                            );
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            print('No user found for that email.');
-                          } else if (e.code == 'wrong-password') {
-                            print('Wrong password provided for that user.');
-                          }
-                        }
-                      },
-                      color: Color.fromRGBO(50, 57, 116, 1),
-                      child:
-                          Text('LOGIN', style: TextStyle(color: Colors.white)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.white, width: 1),
-                      ),
-                    ),
+              SizedBox(
+                height: 30,
+              ),
+
+              Container(
+                child: MaterialButton(
+                  minWidth: 200.0,
+                  height: 40.0,
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (FirebaseAuth.instance
+                          .idTokenChanges()
+                          .isBroadcast) {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        print('No user found for that email.');
+                      } else if (e.code == 'wrong-password') {
+                        print('Wrong password provided for that user.');
+                      }
+                    }
+                  },
+                  color: Color.fromRGBO(50, 57, 116, 1),
+                  child:
+                  Text('LOGIN', style: TextStyle(color: Colors.white)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    side: BorderSide(color: Colors.white, width: 1),
                   ),
+                ),
+              ),
 
-                  SizedBox(
-                    height: 10,
-                  ),
+              SizedBox(
+                height: 10,
+              ),
 
-                  Container(
-                      child: InkWell(
+              Container(
+                  child: InkWell(
                     onTap: () async {
                       signInWithGoogle();
                       if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
@@ -217,30 +216,23 @@ class _loginState extends State<login> {
                       }
                     },
                     child: Image.asset(
-                      'assets/google.png',
+                      'assets/img/google.png',
                       width: 50,
                       height: 50,
                     ),
                   )),
-                  Container(
-                      alignment: Alignment.bottomLeft,
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => politicas()),
-                          );
-                        },
-                        child: Text(
-                          'Terms & Conditions',
-                          style: TextStyle(color: Colors.white, fontSize: 13),
-                        ),
-                      ))
-                ],
-              ),
-            ],
+
+                Container(
+                  child: InkWell(
+                    child: Text(
+                        'Finish him'
+                    ),
+                    onTap: () => {
+                      Navigator.push(context, MaterialPageRoute(builder: (context ) => summary_order()))
+                    },
+                  ),
+
+                )],
           ),
         ),
       ),

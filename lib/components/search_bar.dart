@@ -10,15 +10,15 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
-      width: MediaQuery.of(context).size.width * .70,
-      height: 60.0,
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      width: MediaQuery.of(context).size.width * .80,
+      height: 40.0,
       decoration: kRoundedFadedBorder,
       child: Row(
         children: <Widget>[
           Expanded(
               child: TextField(
-            style: TextStyle(fontSize: 22, color: Colors.white),
+            style: TextStyle(fontSize: 20, color: Colors.white),
             maxLines: 1,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -28,7 +28,7 @@ class SearchBar extends StatelessWidget {
           IconButton(
               icon: Icon(
                 Icons.search,
-                size: 28.0,
+                size: 25.0,
                 color: Colors.white,
               ),
               onPressed: () {})
