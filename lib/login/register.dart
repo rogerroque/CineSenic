@@ -12,8 +12,9 @@ class register extends StatefulWidget {
 
 class _registerState extends State<register> {
   bool _showPassword = false;
-  var email = null;
-  var password = null;
+  var email;
+  var password;
+  var username;
 
   Widget _buildPasswordTextField() {
     return TextField(
@@ -84,6 +85,9 @@ class _registerState extends State<register> {
                 margin: const EdgeInsets.only(right: 25.0, left: 25.0),
                 width: double.infinity,
                 child: TextField(
+                  onChanged: (text) {
+                    username = text;
+                  },
                   obscureText: false,
                   decoration: new InputDecoration(
                       enabledBorder: const UnderlineInputBorder(
@@ -160,6 +164,7 @@ class _registerState extends State<register> {
                       await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                               email: email, password: password);
+                      await FirebaseAuth.instance.currentUser.updateProfile(displayName: username);
                       if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
                         Navigator.push(
                           context,

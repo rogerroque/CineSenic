@@ -2,13 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/const.dart';
+import 'package:login_app/components/paymodel.dart';
 import 'package:login_app/login/login.dart';
+import 'package:provider/provider.dart';
 import 'components/model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(App());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => PayModel(),
+      child: App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -16,6 +23,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     void _loadMovies() {
       FirebaseFirestore.instance
           .collection("Peliculas")

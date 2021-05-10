@@ -32,6 +32,7 @@ dependencies:
   chewie:
   video_player:
   youtube_player_flutter:
+  provider: ^4.3.3
 
 
   # The following adds the Cupertino Icons font to your application.
