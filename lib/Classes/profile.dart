@@ -247,7 +247,7 @@ class _profileState extends State<profile> {
               Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Text(
-                  'eltemoburlao10@elpuig.xeill.net',
+                  FirebaseAuth.instance.currentUser.email,
                   style: TextStyle(
                       color: Colors.yellow,
                       fontSize: 16,

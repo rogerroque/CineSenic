@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/components/butacas.dart';
 import 'package:login_app/components/calendar_day.dart';
-import 'package:login_app/components/paymodel.dart';
+import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/components/show_time.dart';
 import 'package:login_app/components/const.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class BuyTicket extends StatefulWidget {
@@ -249,6 +250,47 @@ class _BuyTicketState extends State<BuyTicket> {
                 ),
                 Center(child: Image.asset('assets/images/screen.png')),
                 Butacas(price: widget.price, selected: selected),
+                Container(
+                  margin: EdgeInsets.only(top: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Consumer<PurchaseModel>(
+                            builder: (context, pay, child) {
+                              return Text(
+                                pay.pay.toString() + " €",
+                                style: TextStyle(
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white
+                                ),
+                              );
+                            }
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                        decoration: BoxDecoration(
+                            color: kActionColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0)
+                            )
+                        ),
+                        child: InkWell(
+                            child: Text('Pay',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.bold
+                                )
+                            )
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

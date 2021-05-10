@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class PayModel extends ChangeNotifier {
+class PurchaseModel extends ChangeNotifier {
   var pay = 0.0;
 
   void add(var price) {

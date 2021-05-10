@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/const.dart';
-import 'package:login_app/components/paymodel.dart';
+import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
 import 'package:provider/provider.dart';
 import 'components/model.dart';
@@ -12,7 +12,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
-      create: (context) => PayModel(),
+      create: (context) => PurchaseModel(),
       child: App(),
     ),
   );
