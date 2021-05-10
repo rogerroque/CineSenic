@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_app/Classes/menu.dart';
 import 'package:login_app/components/calendar_day.dart';
 import 'package:login_app/components/cinema_seat.dart';
 import 'package:login_app/components/show_time.dart';
@@ -340,7 +341,10 @@ class _BuyTicketState extends State<BuyTicket> {
                             )
                         ),
                         child: InkWell(
-                            child: Text('Pay',
+                          onTap: () => {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => menu()))
+                          },
+                            child: Text('Continue',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25.0,

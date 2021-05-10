@@ -125,7 +125,8 @@ class _homeState extends State<home> {
                       ),
                     ),
 
-                    SearchBar(hint: 'Search Movies..',),
+                    /*SearchBar(hint: 'Search Movies..',),*/
+
 
                   ]
                 ),
