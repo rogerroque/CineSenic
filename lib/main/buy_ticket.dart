@@ -1,10 +1,12 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_app/Classes/menu.dart';
 import 'package:login_app/components/calendar_day.dart';
 import 'package:login_app/components/cienma_seat.dart';
 import 'package:login_app/components/show_time.dart';
 import 'package:login_app/components/const.dart';
+import 'package:login_app/main/home.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -31,7 +33,7 @@ class BuyTicket extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: SizedBox(
-          height: 1170,
+          height: 1270,
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -74,9 +76,7 @@ class BuyTicket extends StatelessWidget {
                       controller: YoutubePlayerController(
                         initialVideoId: videoURL,
                         flags: YoutubePlayerFlags(
-                            autoPlay: true,
-                            hideControls: true
-                        ),
+                            autoPlay: true, hideControls: true),
                       ),
                       showVideoProgressIndicator: true,
                       progressIndicatorColor: Colors.white,
@@ -171,10 +171,10 @@ class BuyTicket extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           CalendarDay(
-                              dayNumber: day0.toString(),
-                              dayAbbreviation:
-                                  DateFormat('E').format(DateTime.now()),
-                              isActive: true,
+                            dayNumber: day0.toString(),
+                            dayAbbreviation:
+                                DateFormat('E').format(DateTime.now()),
+                            isActive: true,
                           ),
                           CalendarDay(
                             dayNumber: day1.toString(),
@@ -383,7 +383,14 @@ class BuyTicket extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(25.0))),
                         child: InkWell(
-                            child: Text('Pay',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => menu()),
+                              );
+                            },
+                            child: Text('Continue',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25.0,
