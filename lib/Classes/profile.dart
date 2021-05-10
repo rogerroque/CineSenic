@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -17,7 +18,7 @@ class _profileState extends State<profile> {
 
   bool editUsername = false;
   TextEditingController _editingController;
-  String username = "Teemo";
+  String username = FirebaseAuth.instance.currentUser.displayName;
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +247,7 @@ class _profileState extends State<profile> {
               Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Text(
-                  'eltemoburlao10@elpuig.xeill.net',
+                  FirebaseAuth.instance.currentUser.email,
                   style: TextStyle(
                       color: Colors.yellow,
                       fontSize: 16,

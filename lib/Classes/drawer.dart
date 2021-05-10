@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/contact.dart';
@@ -42,7 +43,7 @@ class drawer extends StatelessWidget {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(top: 10, left: 25),
               child: Text(
-                'Teemo',
+                FirebaseAuth.instance.currentUser.displayName,
                 style: TextStyle(
                     fontFamily: 'UbuntuBold',
                     fontSize: 25,
