@@ -38,7 +38,7 @@ class _homeState extends State<home> {
 
               SingleChildScrollView(
               child: SizedBox(
-                height: 880,
+                height: MediaQuery.of(context).size.height,
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
