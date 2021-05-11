@@ -5,7 +5,8 @@ import 'package:login_app/components/const.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
 import 'package:provider/provider.dart';
-import 'components/model.dart';
+import 'components/menumodel.dart';
+import 'components/moviemodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,25 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void _loadMenus() {
+      FirebaseFirestore.instance
+          .collection("Menus")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          menus.add(
+            new Menu(
+                name: result.get("Name"),
+                price: result.get("Price"),
+                imageURL: result.get("Img"),
+                contador: result.get("Contador")
+            ),
+          );
+          print(result.get("Name"));
+        });
+      });
+    }
 
     void _loadMovies() {
       FirebaseFirestore.instance
@@ -66,6 +86,7 @@ class App extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             print('Conectado a Firebase');
             _loadMovies();
+            _loadMenus();
             return login();
           }
 

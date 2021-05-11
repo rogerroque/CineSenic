@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:login_app/components/menumodel.dart';
+import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
+import 'package:provider/provider.dart';
 
 class summary_order extends StatefulWidget {
 
@@ -11,8 +15,8 @@ class summary_order extends StatefulWidget {
 enum tarjetas { visa, paypal, mastercard }
 
 class _summary_orderState extends State<summary_order> {
-  var movieName = 'Fast & Furious 9';
-  var date = 'Thursday 18/03';
+  var movieName = "Joker";
+  var date = DateFormat('EEEE').format(DateTime.now()) + " " + DateFormat('d').format(DateTime.now()) + "/" + DateFormat('M').format(DateTime.now());
   var room = '10';
   var at = '19:30';
   var numberOfTickets = '3';
@@ -23,6 +27,10 @@ class _summary_orderState extends State<summary_order> {
 
   @override
   Widget build(BuildContext context) {
+    Map butacas = Provider.of<PurchaseModel>(context, listen: false).selected;
+    Map menus = Provider.of<PurchaseModel>(context, listen: false).menuSelected;
+    var numberOfTickets = butacas.length;
+    var numberOfMenus = menus.length;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -216,7 +224,7 @@ class _summary_orderState extends State<summary_order> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 10, left: 50),
                                 child: Text(
-                                  'X' + numberOfTickets + ' tickets',
+                                  'X' + numberOfTickets.toString() + ' butacas',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -231,7 +239,7 @@ class _summary_orderState extends State<summary_order> {
                                 margin: EdgeInsets.only(top: 10, right: 50),
                                 alignment: Alignment.topCenter,
                                 child: Text(
-                                  price + '€',
+                                  Provider.of<PurchaseModel>(context, listen: false).getButacasPrice(numberOfTickets) + '€',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -346,7 +354,6 @@ class _summary_orderState extends State<summary_order> {
                                 ),
                               ),
                             )
-
                           ],
                         ),
 
@@ -354,7 +361,7 @@ class _summary_orderState extends State<summary_order> {
                           margin: EdgeInsets.only(top: 40, bottom: 10, right: 10),
                           alignment: Alignment.centerRight,
                           child: Text(
-                            'Total: ' + total + '€',
+                            'Total: ' + Provider.of<PurchaseModel>(context, listen: false).pay.toString() + '€',
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -442,11 +449,9 @@ class _summary_orderState extends State<summary_order> {
                               width: 1
                           )
                       ),
-
                     ),
                   )
                 )
-
               ],
             ),
           ),

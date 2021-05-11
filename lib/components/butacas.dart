@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:provider/provider.dart';
 import 'cinema_seat.dart';
-import 'const.dart';
 
 class Butacas extends StatefulWidget {
   var price;

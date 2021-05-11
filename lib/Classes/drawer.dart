@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:login_app/Classes/contact.dart';
 import 'package:login_app/Classes/politicas.dart';
 import 'package:login_app/Classes/profile.dart';
 import 'package:login_app/Classes/promotions.dart';
@@ -9,7 +8,6 @@ import 'package:login_app/Classes/purchase_history.dart';
 import 'package:login_app/Classes/settings.dart';
 import 'package:login_app/Classes/write_review.dart';
 
-import 'help.dart';
 
 class drawer extends StatelessWidget {
   @override

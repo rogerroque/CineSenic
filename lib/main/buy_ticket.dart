@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/Classes/menu.dart';
@@ -35,6 +34,7 @@ class _BuyTicketState extends State<BuyTicket> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<PurchaseModel>(context, listen: false).setData(widget.title, widget.price);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -282,6 +282,7 @@ class _BuyTicketState extends State<BuyTicket> {
                         ),
                         child: InkWell(
                           onTap: () => {
+                            Provider.of<PurchaseModel>(context, listen: false).getButacasSelected(selected),
                             Navigator.push(context, MaterialPageRoute(builder: (context) => menu()))
                           },
                             child: Text('Continue',

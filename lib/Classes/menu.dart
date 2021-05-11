@@ -1,26 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:login_app/Classes/summary_order.dart';
 import 'package:login_app/components/const.dart';
-
+import 'package:login_app/components/menumodel.dart';
+import 'package:login_app/components/purchasemodel.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable, camel_case_types
-
 class menu extends StatefulWidget {
+  int index = 0;
 
   @override
   _menu createState() => _menu();
 }
 class _menu extends State<menu> {
   var title = "Menus";
-  int contador1 = 0;
-  int contador2 = 0;
-  int contador3 = 0;
-  int contador4 = 0;
-  int contador5 = 0;
-  int contador6 = 0;
-  int contador7 = 0;
-  int contador8 = 0;
+  var menuSelected = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,533 +51,136 @@ class _menu extends State<menu> {
                 ),
               ),
 
-              GridView.count(
+              GridView.builder(
                 primary: false,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(10),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 40,
-                crossAxisCount: 2,
-
-                children: <Widget>[
-                  Container(
-                    child: Column(
-                      children: [
-                        Expanded(
-                        child :Image(
-                          image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                        ),
-                        ),
-                        Row(
-
-                          children: [
-                            IconButton(
-                                icon: Padding(
-                                  child: Align(
-                                    child: Icon(
-                                      Icons.add_circle_outline,
-                                      size: 30.0,
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  padding: const EdgeInsets.only(left: 12),
-
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    contador1++;
-                                  });
-                                }
-                                ),
-                            IconButton(
-                                icon: Padding(
-                                  child: Align(
-                                    child: Icon(
-                                      Icons.remove_circle_outline,
-                                      size: 30.0,
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  padding: const EdgeInsets.only(left: 12),
-
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if(contador1 > 0){
-                                      contador1--;
-                                    }
-                                  });
-                                }
+                itemCount: menus.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 40,
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child :Image(
+                              image: NetworkImage(
+                                  menus[index].imageURL,
+                              ),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  child: Text(
-                                    contador1.toString(),
-                                    style: TextStyle( fontSize: 30 ,color: Colors.white),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                  icon: Padding(
+                                    child: Align(
+                                      child: Icon(
+                                        Icons.add_circle_outline,
+                                        size: 30.0,
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    padding: const EdgeInsets.only(left: 12),
+
                                   ),
-                                  padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
+                                  onPressed: () {
+                                    setState(() {
+                                      menus[index].contador++;
+                                      Provider.of<PurchaseModel>(context, listen: false).add(double.parse(menus[index].price));
+                                      menuSelected[menus[index].name] = menus[index].contador;
+                                      print(menuSelected);
+                                    });
+                                  }
+                              ),
+                              IconButton(
+                                  icon: Padding(
+                                    child: Align(
+                                      child: Icon(
+                                        Icons.remove_circle_outline,
+                                        size: 30.0,
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    padding: const EdgeInsets.only(left: 12),
+
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if(menus[index].contador > 0){
+                                        menus[index].contador--;
+                                        Provider.of<PurchaseModel>(context, listen: false).remove(double.parse(menus[index].price));
+                                        menuSelected[menus[index].name] = menus[index].contador;
+                                        print(menuSelected);
+                                      }
+                                    });
+                                  }
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Padding(
+                                    child: Text(
+                                      menus[index].contador.toString(),
+                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
+                                    ),
+                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+                  );
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25.0),
+                      child: Consumer<PurchaseModel>(
+                          builder: (context, pay, child) {
+                            return Text(
+                              pay.pay.toString() + " €",
+                              style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            );
+                          }
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                      decoration: BoxDecoration(
+                          color: kActionColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0)
+                          )
+                      ),
+                      child: InkWell(
+                          onTap: () => {
+                            Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
+                          },
+                          child: Text('Continue',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold
+                              )
+                          )
+                      ),
                     )
-                  ),
-
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador2++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador2 > 0){
-                                        contador2--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador2.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador3++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador3 > 0){
-                                        contador3--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador3.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador4++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador4 > 0){
-                                        contador4--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador4.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador5++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador5 > 0){
-                                        contador5--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador5.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador6++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador6 > 0){
-                                        contador6--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador6.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador7++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador7 > 0){
-                                        contador7--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador7.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-                  Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child :Image(
-                              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.add_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      contador8++;
-                                    });
-                                  }
-                              ),
-                              IconButton(
-                                  icon: Padding(
-                                    child: Align(
-                                      child: Icon(
-                                        Icons.remove_circle_outline,
-                                        size: 30.0,
-                                      ),
-                                      alignment: Alignment.centerLeft,
-                                    ),
-                                    padding: const EdgeInsets.only(left: 12),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      if(contador8 > 0){
-                                        contador8--;
-                                      }
-                                    });
-                                  }
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    child: Text(
-                                      contador8.toString(),
-                                      style: TextStyle( fontSize: 30 ,color: Colors.white),
-                                    ),
-                                    padding: const EdgeInsets.only(left: 40, bottom: 3),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      )
-                  ),
-                ],
+                  ],
+                ),
               )
             ],
           ),
@@ -588,9 +188,6 @@ class _menu extends State<menu> {
 
       ),
     );
-
   }
-
-
 }
 
