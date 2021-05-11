@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/drawer.dart';
-import 'package:login_app/components/red_rounded_action_button.dart';
 import 'package:login_app/components//const.dart';
-import 'package:login_app/components/search_bar.dart';
-import 'package:login_app/main/buy_ticket.dart';
 import 'package:login_app/components/background_gradient_image.dart';
-import 'package:login_app/components/movie_app_bar.dart';
-import 'package:login_app/components/primary_rounder_button.dart';
 import 'package:login_app/components/model.dart';
+import 'package:login_app/components/primary_rounder_button.dart';
+import 'package:login_app/components/red_rounded_action_button.dart';
+import 'package:login_app/main/buy_ticket.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class home extends StatefulWidget {
@@ -31,110 +29,105 @@ class _homeState extends State<home> {
       /*resizeToAvoidBottomInset: false,*/
       key: scaffoldKey,
       drawer: buildDrawer(),
-      body: Container(
-        child: Container(
-          child: Stack(
-            children: <Widget> [
-
-              SingleChildScrollView(
-              child: SizedBox(
-                height: 880,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    BackgroundGradientImage(
-                      image: Image.network(
-                        backgroundImage,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Padding(padding: EdgeInsets.all(10.0)),
-                        /*MovieAppBar(),*/
-                        Padding(padding: EdgeInsets.symmetric(vertical: 50.0)),
-                        Image.network(logoImage, height: 120),
-                        Padding(padding: EdgeInsets.symmetric(vertical: 30.0)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            PrimaryRoundedButton(
-                              text: rating,
-                              callback: () {},
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                year,
-                                style: kSmallMainTextStyle,
-                              ),
-                              Text('•', style: kPromaryColorTextStyle),
-                              Text(categories, style: kSmallMainTextStyle),
-                            ],
-                          ),
-                        ),
-                        Image.asset('assets/images/divider.png'),
-                        RedRoundedActionButton(
-                            text: 'BUY TICKET',
-                            callback: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BuyTicket(movies[widget.index].title, movies[widget.index].price, movies[widget.index].director, movies[widget.index].actor, movies[widget.index].synopsis, movies[widget.index].videoURL),
-                                ),
-                              );
-                            }),
-                        Expanded(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: movies.length,
-                                itemBuilder: (context, index) {
-                                  return MovieCard(
-                                      title: movies[index].title,
-                                      imageLink: movies[index].imageURL,
-                                      active: index == widget.index ? true : false,
-                                      callBack: () {
-                                        setState(() {
-                                          widget.index = index;
-                                        });
-                                      });
-                                })),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-              Container(
-                margin: EdgeInsets.only(top: 30, left: 5),
-                child: Row(
-                  children: <Widget> [
-                    Positioned(
-                      child: IconButton(
-                        icon: Icon(Icons.menu, color: Colors.white),
-                        onPressed: () => scaffoldKey.currentState.openDrawer(),
-                      ),
-                    ),
-
-                    /*SearchBar(hint: 'Search Movies..',),*/
-
-
-                  ]
+      body: Stack(
+        children: <Widget> [
+          SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                BackgroundGradientImage(
+                  image: Image.network(
+                    backgroundImage,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
+                Column(
+                  children: [
+                    Padding(padding: EdgeInsets.all(10.0)),
+                    /*MovieAppBar(),*/
+                    Padding(padding: EdgeInsets.symmetric(vertical: 50.0)),
+                    Image.network(logoImage, height: 120),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 30.0)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        PrimaryRoundedButton(
+                          text: rating,
+                          callback: () {},
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            year,
+                            style: kSmallMainTextStyle,
+                          ),
+                          Text('•', style: kPromaryColorTextStyle),
+                          Text(categories, style: kSmallMainTextStyle),
+                        ],
+                      ),
+                    ),
+                    Image.asset('assets/images/divider.png'),
+                    RedRoundedActionButton(
+                        text: 'BUY TICKET',
+                        callback: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BuyTicket(movies[widget.index].title, movies[widget.index].price, movies[widget.index].director, movies[widget.index].actor, movies[widget.index].synopsis, movies[widget.index].videoURL),
+                            ),
+                          );
+                        }),
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: movies.length,
+                            itemBuilder: (context, index) {
+                              return MovieCard(
+                                  title: movies[index].title,
+                                  imageLink: movies[index].imageURL,
+                                  active: index == widget.index ? true : false,
+                                  callBack: () {
+                                    setState(() {
+                                      widget.index = index;
+                                    });
+                                  });
+                            })),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
-            ],
+          Container(
+            margin: EdgeInsets.only(top: 30, left: 5),
+            child: Row(
+              children: <Widget> [
+                Positioned(
+                  child: IconButton(
+                    icon: Icon(Icons.menu, color: Colors.white),
+                    onPressed: () => scaffoldKey.currentState.openDrawer(),
+                  ),
+                ),
+
+                /*SearchBar(hint: 'Search Movies..',),*/
+
+
+              ]
+            ),
           ),
-        ),
+
+        ],
       ),
     );
   }
