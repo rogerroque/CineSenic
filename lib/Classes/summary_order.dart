@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/Classes/payment_method.dart';
 import 'package:login_app/components/menumodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
@@ -431,7 +432,7 @@ class _summary_orderState extends State<summary_order> {
                     constraints: BoxConstraints.tightFor(height: 40, width: double.infinity),
                   child: ElevatedButton(
                     onPressed: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => login()))
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
                     },
                     child: Text(
                       'Next',
