@@ -35,6 +35,8 @@ class _homeState extends State<home> {
             children: <Widget> [
 
               SizedBox(
+              child:SingleChildScrollView(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Stack(
                   fit: StackFit.expand,
@@ -116,27 +118,27 @@ class _homeState extends State<home> {
                           ],
                         ),
                       ),
-
-          Container(
-            margin: EdgeInsets.only(top: 30, left: 5),
-            child: Row(
-              children: <Widget> [
-                IconButton(
-                  icon: Icon(Icons.menu, color: Colors.white),
-                  onPressed: () => scaffoldKey.currentState.openDrawer(),
-                ),
-
-                    /*SearchBar(hint: 'Search Movies..',),*/
+                    ),
 
 
-                  ]
-                ),
+
               ),
+              Container(
+                margin: EdgeInsets.only(top: 30, left: 5),
+                child: Row(
+                    children: <Widget> [
+                      IconButton(
+                        icon: Icon(Icons.menu, color: Colors.white),
+                        onPressed: () => scaffoldKey.currentState.openDrawer(),
+                      ),
 
-            ],
-          ),
-        ),
-      ),
+                      /*SearchBar(hint: 'Search Movies..',),*/
+                    ]
+                ),
+              ),],
+    ),
+    ),
+    ),
     );
   }
 }
