@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/drawer.dart';
-import 'package:login_app/components/red_rounded_action_button.dart';
 import 'package:login_app/components//const.dart';
-import 'package:login_app/components/search_bar.dart';
-import 'package:login_app/main/buy_ticket.dart';
 import 'package:login_app/components/background_gradient_image.dart';
-import 'package:login_app/components/movie_app_bar.dart';
-import 'package:login_app/components/primary_rounder_button.dart';
 import 'package:login_app/components/moviemodel.dart';
+import 'package:login_app/components/primary_rounder_button.dart';
+import 'package:login_app/components/red_rounded_action_button.dart';
+import 'package:login_app/main/buy_ticket.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class home extends StatefulWidget {
@@ -36,9 +34,8 @@ class _homeState extends State<home> {
           child: Stack(
             children: <Widget> [
 
-              SingleChildScrollView(
-              child: SizedBox(
-                height: 880,
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
@@ -119,17 +116,14 @@ class _homeState extends State<home> {
                           ],
                         ),
                       ),
-                    ),
 
           Container(
             margin: EdgeInsets.only(top: 30, left: 5),
             child: Row(
               children: <Widget> [
-                Positioned(
-                  child: IconButton(
-                    icon: Icon(Icons.menu, color: Colors.white),
-                    onPressed: () => scaffoldKey.currentState.openDrawer(),
-                  ),
+                IconButton(
+                  icon: Icon(Icons.menu, color: Colors.white),
+                  onPressed: () => scaffoldKey.currentState.openDrawer(),
                 ),
 
                     /*SearchBar(hint: 'Search Movies..',),*/

@@ -46,7 +46,7 @@ class _registerState extends State<register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(250, 248, 125, 1),
+      backgroundColor: Color.fromRGBO(38, 36, 75, 1.0),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -181,7 +181,7 @@ class _registerState extends State<register> {
                       print(e);
                     }
                   },
-                  color: Color.fromARGB(250, 248, 125, 1),
+                  color: Color.fromARGB(38, 36, 75, 1),
                   child: Text('CREATE ACCOUNT',
                       style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(

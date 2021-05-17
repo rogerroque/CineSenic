@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_app/Classes/payment_method.dart';
 import 'package:login_app/components/menumodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
@@ -75,11 +76,19 @@ class _summary_orderState extends State<summary_order> {
                 ///////////////////////////////////////////////
 
                 Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
+                      image: AssetImage(
+                        'assets/img/f9.jpg',
+                      ),fit: BoxFit.cover,
+                    ),
+                  ),
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 20),
                   child: Container(
                     width: double.infinity,
                     padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top:0),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.white,
@@ -431,7 +440,7 @@ class _summary_orderState extends State<summary_order> {
                     constraints: BoxConstraints.tightFor(height: 40, width: double.infinity),
                   child: ElevatedButton(
                     onPressed: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => login()))
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
                     },
                     child: Text(
                       'Next',
