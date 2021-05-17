@@ -4,15 +4,15 @@ import 'const.dart';
 
 class ShowTime extends StatefulWidget {
   bool isActive;
-
-  final int price;
-
+  final double price;
   final String time;
+  var onSelect;
 
   ShowTime(
       {@required this.time,
       @required this.price,
-      @required this.isActive = false});
+      this.isActive = false,
+      this.onSelect});
 
   @override
   _ShowTimeState createState() => _ShowTimeState();
@@ -25,9 +25,7 @@ class _ShowTimeState extends State<ShowTime> {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onTap: () {
-        setState(() {
-          widget.isActive = !widget.isActive;
-        });
+        widget.onSelect();
       },
       child: Container(
         margin: EdgeInsets.only(left: 10, top: 20, bottom: 30),

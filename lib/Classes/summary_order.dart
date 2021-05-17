@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:login_app/Classes/payment_method.dart';
 import 'package:login_app/components/menumodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
@@ -16,22 +14,21 @@ class summary_order extends StatefulWidget {
 enum tarjetas { visa, paypal, mastercard }
 
 class _summary_orderState extends State<summary_order> {
-  var movieName = "Joker";
-  var date = DateFormat('EEEE').format(DateTime.now()) + " " + DateFormat('d').format(DateTime.now()) + "/" + DateFormat('M').format(DateTime.now());
-  var room = '10';
-  var at = '19:30';
-  var numberOfTickets = '3';
-  var price = '25,90';
-  var total = '25,90';
-  var checkboxCard = false;
-  tarjetas _character = tarjetas.visa;
 
   @override
   Widget build(BuildContext context) {
+    var room = '10';
+    var at = Provider.of<PurchaseModel>(context, listen: false).time;
+    var date = Provider.of<PurchaseModel>(context, listen: false).date;
+    tarjetas _character = tarjetas.visa;
+    var movieName = Provider.of<PurchaseModel>(context, listen: false).movieName;
+    var keys = [];
+    var keysPrice = [];
     Map butacas = Provider.of<PurchaseModel>(context, listen: false).selected;
-    Map menus = Provider.of<PurchaseModel>(context, listen: false).menuSelected;
+    Map menusMap = Provider.of<PurchaseModel>(context, listen: false).menuSelected;
     var numberOfTickets = butacas.length;
-    var numberOfMenus = menus.length;
+    var numberOfMenus = menusMap.length;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -39,12 +36,10 @@ class _summary_orderState extends State<summary_order> {
           child: Container(
             child: Column(
               children: <Widget>[
-
                 Container(
                   margin: EdgeInsets.only(top: 5),
                   child: Row(
                     children: <Widget>[
-
                       Container(
                         child: IconButton(
                           icon: const Icon(Icons.arrow_back_sharp),
@@ -79,9 +74,8 @@ class _summary_orderState extends State<summary_order> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
-                      image: AssetImage(
-                        'assets/img/f9.jpg',
-                      ),fit: BoxFit.cover,
+                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
+                      fit: BoxFit.cover,
                     ),
                   ),
                   margin: EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -272,70 +266,67 @@ class _summary_orderState extends State<summary_order> {
                           ),
                         ),
 
-                        Row(
-                            children: <Widget> [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10, left: 50),
-                                  child: Text(
-                                    'X1 Children\'s menu',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 16
-                                    ),
-                                  ),
-                                  alignment: Alignment.topCenter,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10, right: 50),
-                                  alignment: Alignment.topCenter,
-                                  child: Text(
-                                    price + '€',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 16
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ]
-                        ),
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: numberOfMenus,
+                          itemBuilder: (BuildContext context, int index) {
 
-                        Row(
-                            children: <Widget> [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10, left: 50),
-                                  child: Text(
-                                    'X1 Full Menu ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 16
+                            String menusPrint() {
+                              for (var entry in menusMap.entries) {
+                                if (!keys.contains(entry.key)) {
+                                  keys.add(entry.key);
+                                  return "X" + entry.value.toString() + " " + entry.key;
+                                }
+                              }
+                            }
+
+                            String printMenusPrice() {
+                              for (var entry in menusMap.entries) {
+                                if (entry.value == 0) {
+                                  menusMap.remove(entry);
+                                }
+                                if (entry.key == menus[index].name && !keysPrice.contains(entry.key)) {
+                                  keysPrice.add(entry.key);
+                                  double price = double.parse(menus[index].price);
+                                  return (price * entry.value).toString();
+                                }
+                              }
+                            }
+
+                            return Row(
+                                children: <Widget> [
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10, left: 50),
+                                      child: Text(
+                                        menusPrint(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 16
+                                        ),
+                                      ),
+                                      alignment: Alignment.topCenter,
                                     ),
                                   ),
-                                  alignment: Alignment.topCenter,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10, right: 50),
-                                  alignment: Alignment.topCenter,
-                                  child: Text(
-                                    price + '€',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize: 16
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10, right: 50),
+                                      alignment: Alignment.topCenter,
+                                      child: Text(
+                                        printMenusPrice() + '€',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 16
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ]
+                                ]
+                            );
+                          },
                         ),
 
                         Row(
@@ -388,7 +379,7 @@ class _summary_orderState extends State<summary_order> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        dense:true,
+                        dense: true,
                         contentPadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0),
                         title: const Text('Visa', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),),
                         leading: Radio<tarjetas>(
@@ -440,7 +431,7 @@ class _summary_orderState extends State<summary_order> {
                     constraints: BoxConstraints.tightFor(height: 40, width: double.infinity),
                   child: ElevatedButton(
                     onPressed: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => login()))
                     },
                     child: Text(
                       'Next',

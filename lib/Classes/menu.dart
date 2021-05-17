@@ -68,9 +68,7 @@ class _menu extends State<menu> {
                         children: [
                           Expanded(
                             child :Image(
-                              image: NetworkImage(
-                                  menus[index].imageURL,
-                              ),
+                              image: NetworkImage(menus[index].imageURL),
                             ),
                           ),
                           Row(
@@ -167,6 +165,11 @@ class _menu extends State<menu> {
                       ),
                       child: InkWell(
                           onTap: () => {
+                            for (var entry in menuSelected.entries) {
+                              if (entry.value == 0) {
+                                menuSelected.remove(entry)
+                              }
+                            },
                             Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
                             Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
                           },

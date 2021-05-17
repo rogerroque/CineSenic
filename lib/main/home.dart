@@ -37,7 +37,7 @@ class _homeState extends State<home> {
               SizedBox(
               child:SingleChildScrollView(
               child: SizedBox(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height + 36,
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
@@ -92,7 +92,8 @@ class _homeState extends State<home> {
                                           movies[widget.index].director,
                                           movies[widget.index].actor,
                                           movies[widget.index].synopsis,
-                                          movies[widget.index].videoURL
+                                          movies[widget.index].videoURL,
+                                          movies[widget.index].imageURL
                                       ),
                                 ),
                               );

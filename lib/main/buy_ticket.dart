@@ -15,9 +15,12 @@ class BuyTicket extends StatefulWidget {
   var director;
   var actor;
   var synopsis;
+  var time;
   var videoURL;
+  var date;
+  var image;
 
-  BuyTicket(this.title, this.price, this.director, this.actor, this.synopsis, this.videoURL);
+  BuyTicket(this.title, this.price, this.director, this.actor, this.synopsis, this.videoURL, this.image);
 
   @override
   _BuyTicketState createState() => _BuyTicketState();
@@ -34,7 +37,8 @@ class _BuyTicketState extends State<BuyTicket> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PurchaseModel>(context, listen: false).setData(widget.title, widget.price);
+    Provider.of<PurchaseModel>(context, listen: false)
+        .setData(widget.title, widget.price);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -171,7 +175,10 @@ class _BuyTicketState extends State<BuyTicket> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,),
+                  height: 85,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
                   width: MediaQuery.of(context).size.width * .98,
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -183,72 +190,12 @@ class _BuyTicketState extends State<BuyTicket> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: <Widget>[
-                          CalendarDay(
-                            dayNumber: day0.toString(),
-                            dayAbbreviation:
-                                DateFormat('E').format(DateTime.now()),
-                            isActive: false,
-                          ),
-                          CalendarDay(
-                            dayNumber: day1.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 1))),
-                          ),
-                          CalendarDay(
-                            dayNumber: day2.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 2))),
-                          ),
-                          CalendarDay(
-                            dayNumber: day3.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 3))),
-                          ),
-                          CalendarDay(
-                            dayNumber: day4.toString(),
-                            dayAbbreviation: DateFormat('E')
-                                .format(DateTime.now().add(Duration(days: 4))),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: SeleccionFechas(day0: day0),
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: <Widget>[
-                      ShowTime(
-                        time: '16:00',
-                        price: 5,
-                        isActive: false,
-                      ),
-                      ShowTime(
-                        time: '17:00',
-                        price: 10,
-                        isActive: false,
-                      ),
-                      ShowTime(
-                        time: '18:00',
-                        price: 10,
-                        isActive: false,
-                      ),
-                      ShowTime(
-                        time: '19:00',
-                        price: 10,
-                        isActive: false,
-                      ),
-                      ShowTime(
-                        time: '20:00',
-                        price: 15,
-                        isActive: false,
-                      ),
-                    ],
-                  ),
+                Container(
+                  height: 120,
+                  child: SeleccionHoras(widget: widget),
                 ),
                 Center(child: Image.asset('assets/images/screen.png')),
                 Butacas(price: widget.price, selected: selected),
@@ -261,38 +208,36 @@ class _BuyTicketState extends State<BuyTicket> {
                         padding: const EdgeInsets.only(left: 25.0),
                         child: Consumer<PurchaseModel>(
                             builder: (context, pay, child) {
-                              return Text(
-                                pay.pay.toString() + " €",
-                                style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white
-                                ),
-                              );
-                            }
-                        ),
+                          return Text(
+                            pay.pay.toString() + " €",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          );
+                        }),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.0, vertical: 10.0),
                         decoration: BoxDecoration(
                             color: kActionColor,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0)
-                            )
-                        ),
+                                topLeft: Radius.circular(20.0))),
                         child: InkWell(
-                          onTap: () => {
-                            Provider.of<PurchaseModel>(context, listen: false).getButacasSelected(selected),
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => menu()))
-                          },
+                            onTap: () => {
+                                  Provider.of<PurchaseModel>(context, listen: false).getButacasSelected(selected),
+                                  Provider.of<PurchaseModel>(context, listen: false).getMovieData(widget.title, widget.image),
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => menu()))
+                                },
                             child: Text('Continue',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25.0,
-                                    fontWeight: FontWeight.bold
-                                )
-                            )
-                        ),
+                                    fontWeight: FontWeight.bold))),
                       )
                     ],
                   ),
@@ -302,6 +247,89 @@ class _BuyTicketState extends State<BuyTicket> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SeleccionHoras extends StatefulWidget {
+  const SeleccionHoras({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final BuyTicket widget;
+
+  @override
+  _SeleccionHorasState createState() => _SeleccionHorasState();
+}
+
+class _SeleccionHorasState extends State<SeleccionHoras> {
+  int selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return Row(
+          children: <Widget>[
+            ShowTime(
+              isActive: index == selected,
+              time: (15 + index).toString() + ":00",
+              price: widget.widget.price,
+                onSelect: () {
+                  setState(() {
+                    Provider.of<PurchaseModel>(context, listen: false).getTime((15 + index).toString() + ":00");
+                    this.selected = index;
+                  });
+                }
+            )
+          ],
+        );
+      },
+    );
+  }
+}
+
+class SeleccionFechas extends StatefulWidget {
+  const SeleccionFechas({
+    Key key,
+    @required this.day0,
+  }) : super(key: key);
+
+  final int day0;
+
+  @override
+  _SeleccionFechasState createState() => _SeleccionFechasState();
+}
+
+class _SeleccionFechasState extends State<SeleccionFechas> {
+
+  int selected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 5,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Row(
+          children: <Widget>[
+            CalendarDay(
+              isActive: index == selected,
+              dayNumber: (widget.day0 + index).toString(),
+              dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: index))),
+              onSelect: () {
+                setState(() {
+                  Provider.of<PurchaseModel>(context, listen: false).getDate((widget.day0 + index).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
+                  this.selected = index;
+                });
+              }
+            ),
+          ],
+        );
+      },
     );
   }
 }

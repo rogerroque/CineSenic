@@ -6,6 +6,9 @@ class PurchaseModel extends ChangeNotifier {
   var movieName;
   var menuSelected;
   var pricePerSeat;
+  var time;
+  var imageUrl;
+  var date;
 
   void setData(var movieName, var pricePerSeat) {
     this.movieName = movieName;
@@ -35,5 +38,18 @@ class PurchaseModel extends ChangeNotifier {
   String getButacasPrice(int numberOfTickets) {
     var butacaPrice = numberOfTickets * pricePerSeat;
     return butacaPrice.toString();
+  }
+
+  void getMovieData(var movieName, var imageUrl) {
+    this.movieName = movieName;
+    this.imageUrl = imageUrl;
+  }
+
+  void getDate(var date) {
+    this.date = date;
+  }
+
+  void getTime(var time) {
+    this.time = time;
   }
 }

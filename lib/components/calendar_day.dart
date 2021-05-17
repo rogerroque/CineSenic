@@ -5,9 +5,10 @@ class CalendarDay extends StatefulWidget {
   final String dayAbbreviation;
   final String dayNumber;
   bool isActive;
+  var onSelect;
 
   CalendarDay(
-      {@required this.dayNumber, this.dayAbbreviation, this.isActive = false});
+      {@required this.dayNumber, this.dayAbbreviation, this.isActive = false, this.onSelect});
 
   @override
   _CalendarDayState createState() => _CalendarDayState();
@@ -20,9 +21,10 @@ class _CalendarDayState extends State<CalendarDay> {
         padding: const EdgeInsets.only(left: 10, right: 15),
         child: InkWell(
           onTap: () {
-            setState(() {
-              widget.isActive = !widget.isActive;
-            });
+            widget.onSelect();
+            // setState(() {
+            //   widget.isActive = !widget.isActive;
+            // });
           },
           child: Container(
             width: 50.0,
@@ -33,10 +35,10 @@ class _CalendarDayState extends State<CalendarDay> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(widget.dayNumber,
+                Text(
+                    widget.dayNumber,
                     style: TextStyle(
-                        color:
-                            widget.isActive ? kBackgroundColor : Colors.white,
+                        color: widget.isActive ? kBackgroundColor : Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold)),
                 Text(
