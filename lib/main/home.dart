@@ -34,92 +34,86 @@ class _homeState extends State<home> {
           child: Stack(
             children: <Widget> [
 
-              SizedBox(
-              child:SizedBox(
-                height: MediaQuery.of(context).size.height,
-                /*height: MediaQuery.of(context).size.height + 36,*/
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    BackgroundGradientImage(
-                      image: Image.network(
-                        backgroundImage,
-                        fit: BoxFit.cover,
-                      ),
+              Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  BackgroundGradientImage(
+                    image: Image.network(
+                      backgroundImage,
+                      fit: BoxFit.cover,
                     ),
-                    Column(
-                      children: [
-                        Padding(padding: EdgeInsets.all(10.0)),
-                        /*MovieAppBar(),*/
-                        Padding(padding: EdgeInsets.symmetric(vertical: 50.0)),
-                        Image.network(logoImage, height: 120),
-                        Padding(padding: EdgeInsets.symmetric(vertical: 30.0)),
-                        Row(
+                  ),
+                  Column(
+                    children: [
+                      Padding(padding: EdgeInsets.all(10.0)),
+                      /*MovieAppBar(),*/
+                      Padding(padding: EdgeInsets.symmetric(vertical: 50.0)),
+                      Image.network(logoImage, height: 120),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 30.0)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          PrimaryRoundedButton(
+                            text: rating,
+                            callback: () {},
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 10.0),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            PrimaryRoundedButton(
-                              text: rating,
-                              callback: () {},
+                            Text(
+                              year,
+                              style: kSmallMainTextStyle,
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                year,
-                                style: kSmallMainTextStyle,
-                              ),
-                              Text('•', style: kPromaryColorTextStyle),
-                              Text(categories, style: kSmallMainTextStyle),
-                            ],
-                          ),
-                        ),
-                        Image.asset('assets/images/divider.png'),
-                        RedRoundedActionButton(
-                            text: 'BUY TICKET',
-                            callback: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BuyTicket(
-                                          movies[widget.index].title,
-                                          movies[widget.index].price,
-                                          movies[widget.index].director,
-                                          movies[widget.index].actor,
-                                          movies[widget.index].synopsis,
-                                          movies[widget.index].videoURL,
-                                          movies[widget.index].imageURL
-                                      ),
-                                ),
-                              );
-                            }),
-                        Expanded(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: movies.length,
-                                itemBuilder: (context, index) {
-                                  return MovieCard(
-                                      title: movies[index].title,
-                                      imageLink: movies[index].imageURL,
-                                      active: index == widget.index ? true : false,
-                                      callBack: () {
-                                        setState(() {
-                                          widget.index = index;
-                                        });
-                                      });
-                                })),
-                              ],
-                            ),
+                            Text('•', style: kPromaryColorTextStyle),
+                            Text(categories, style: kSmallMainTextStyle),
                           ],
                         ),
                       ),
-              ),
+                      Image.asset('assets/images/divider.png'),
+                      RedRoundedActionButton(
+                          text: 'BUY TICKET',
+                          callback: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    BuyTicket(
+                                        movies[widget.index].title,
+                                        movies[widget.index].price,
+                                        movies[widget.index].director,
+                                        movies[widget.index].actor,
+                                        movies[widget.index].synopsis,
+                                        movies[widget.index].videoURL,
+                                        movies[widget.index].imageURL
+                                    ),
+                              ),
+                            );
+                          }),
+                      Expanded(
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: movies.length,
+                              itemBuilder: (context, index) {
+                                return MovieCard(
+                                    title: movies[index].title,
+                                    imageLink: movies[index].imageURL,
+                                    active: index == widget.index ? true : false,
+                                    callBack: () {
+                                      setState(() {
+                                        widget.index = index;
+                                      });
+                                    });
+                              })),
+                            ],
+                          ),
+                        ],
+                      ),
               Container(
                 margin: EdgeInsets.only(top: 10, left: 5),
                 child: Row(
