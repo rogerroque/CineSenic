@@ -50,7 +50,6 @@ class _homeState extends State<home> {
                   Column(
                     children: [
                       Padding(padding: EdgeInsets.all(10.0)),
-                      /*MovieAppBar(),*/
                       Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                       Image.network(logoImage, height: 120),
                       Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
