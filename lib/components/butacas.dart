@@ -19,41 +19,41 @@ class _butacaState extends State<Butacas> {
   var butacasReservadas = {};
   var butacas = {};
 
-  void reserves() {
-    FirebaseFirestore.instance
-        .collection("Reservas")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        // if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
+  @override
+  Widget build(BuildContext context) {
+    void reserves() {
+      FirebaseFirestore.instance
+          .collection("Reservas")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          // if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
           butacas = result.get("butaca");
           for (var entry in butacas.entries) {
             butacasReservadas[entry.key] = entry.value;
           }
-        // }
+          // }
+        });
       });
-    });
-  }
-
-  bool isReserved(String butaca) {
-    for (var entry in butacasReservadas.entries) {
-      if (entry.key == butaca) {
-        print("Base de Datos => " + entry.key);
-        print("Bucle Cinemaseat => " + butaca);
-        return true;
-      }
     }
-    return false;
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    reserves();
+    bool isReserved(String butaca) {
+      for (var entry in butacasReservadas.entries) {
+        if (entry.key == butaca) {
+          print("Base de Datos => " + entry.key);
+          print("Bucle Cinemaseat => " + butaca);
+          return true;
+        }
+      }
+      return false;
+    }
+
     return Padding(
       padding: EdgeInsets.all(5.0),
       child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection("Filas").snapshots(),
           builder: (context, snapshot) {
+            reserves();
             if (snapshot.hasError) {
               return Text('Something went wrong');
             }
