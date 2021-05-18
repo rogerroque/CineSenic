@@ -20,6 +20,9 @@ class _menu extends State<menu> {
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i == widget.index; i++)
+    menus[i].contador = 0;
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: BottomAppBar(

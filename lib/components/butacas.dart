@@ -9,7 +9,6 @@ class Butacas extends StatefulWidget {
   var price;
   var selected = {};
 
-
   Butacas({this.price, this.selected});
 
   @override
@@ -17,15 +16,43 @@ class Butacas extends StatefulWidget {
 }
 
 class _butacaState extends State<Butacas> {
+  var butacasReservadas = {};
+  var butacas = {};
+
+  void reserves() {
+    FirebaseFirestore.instance
+        .collection("Reservas")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        // if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
+          butacas = result.get("butaca");
+          for (var entry in butacas.entries) {
+            butacasReservadas[entry.key] = entry.value;
+          }
+        // }
+      });
+    });
+  }
+
+  bool isReserved(String butaca) {
+    for (var entry in butacasReservadas.entries) {
+      if (entry.key == butaca) {
+        print("Base de Datos => " + entry.key);
+        print("Bucle Cinemaseat => " + butaca);
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-
+    reserves();
     return Padding(
       padding: EdgeInsets.all(5.0),
       child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Filas")
-              .snapshots(),
+          stream: FirebaseFirestore.instance.collection("Filas").snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong');
@@ -42,39 +69,53 @@ class _butacaState extends State<Butacas> {
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: (MediaQuery.of(context).size.width / 20),),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 20),
+                      ),
                       for (var i = 0; i <= document.data()['ButacasIzq'] - 1; i++)
-                        CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i+1).toString(), isSelected: widget.selected.containsKey( "fila-izq: " + document.id + " butaca: " + (i+1).toString()), onTap2: (isSelected, butaca) {
-                          if(isSelected) {
-                            widget.selected[butaca] = true;
-                            print(widget.selected);
-                            Provider.of<PurchaseModel>(context, listen: false).add(widget.price);
-                          } else {
-                            widget.selected.remove(butaca);
-                            print(widget.selected);
-                            Provider.of<PurchaseModel>(context, listen: false).remove(widget.price);
+                        CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
+                          if (isReserved == false) {
+                            if (isSelected) {
+                              widget.selected[butaca] = true;
+                              print(widget.selected);
+                              Provider.of<PurchaseModel>(context, listen: false)
+                                  .add(widget.price);
+                            } else {
+                              widget.selected.remove(butaca);
+                              print(widget.selected);
+                              Provider.of<PurchaseModel>(context, listen: false)
+                                  .remove(widget.price);
+                            }
                           }
-                        },),
-                      SizedBox(width: (MediaQuery.of(context).size.width / 20) * 2,),
+                          },
+                        ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 20) * 2,
+                      ),
                       for (var i = 0; i <= document.data()['ButacasDer'] - 1; i++)
-                        CinemaSeat(butaca: "fila-der: " + document.id + " butaca: " + (i+1).toString(), isSelected: widget.selected.containsKey( "fila-der: " + document.id + " butaca: " + (i+1).toString()), onTap2: (isSelected, butaca) {
-                          if(isSelected) {
-                            widget.selected[butaca] = true;
-                            print(widget.selected);
-                            Provider.of<PurchaseModel>(context, listen: false).add(widget.price);
-                          } else {
-                            widget.selected.remove(butaca);
-                            print(widget.selected);
-                            Provider.of<PurchaseModel>(context, listen: false).remove(widget.price);
+                        CinemaSeat(butaca: "fila-der: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-der: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-der: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
+                          if (isReserved == false) {
+                            if (isSelected) {
+                              widget.selected[butaca] = true;
+                              print(widget.selected);
+                              Provider.of<PurchaseModel>(context, listen: false)
+                                  .add(widget.price);
+                            } else {
+                              widget.selected.remove(butaca);
+                              print(widget.selected);
+                              Provider.of<PurchaseModel>(context, listen: false)
+                                  .remove(widget.price);
+                            }
                           }
-                        },),
-                      SizedBox(width: (MediaQuery.of(context).size.width / 20),),
-                    ]
-                );
+                          },
+                        ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 20),
+                      ),
+                    ]);
               }).toList(),
             );
           }),
     );
   }
 }
-

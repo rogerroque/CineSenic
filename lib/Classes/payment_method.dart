@@ -1,10 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/making_payment_alert_dialog.dart';
+import 'package:login_app/components/purchasemodel.dart';
+import 'package:provider/provider.dart';
 
 class payment_method extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    Future<void> reserved() {
+      return FirebaseFirestore.instance.collection("Reservas").add({
+        'butaca': Provider.of<PurchaseModel>(context, listen: false).selected,
+        'menus' : Provider.of<PurchaseModel>(context, listen: false).menuSelected,
+        'movieName' : Provider.of<PurchaseModel>(context, listen: false).movieName,
+        'date' : Provider.of<PurchaseModel>(context, listen: false).date,
+        'time' : Provider.of<PurchaseModel>(context, listen: false).time,
+        'total' : Provider.of<PurchaseModel>(context, listen: false).pay,
+        'uid' : FirebaseAuth.instance.currentUser.uid
+      });
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -126,6 +143,7 @@ class payment_method extends StatelessWidget {
                       constraints: BoxConstraints.tightFor(height: 40, width: double.infinity),
                       child: ElevatedButton(
                         onPressed: () => {
+                          reserved(),
                           showDialog(context: context, builder: (context) => payment_alert_dialog())
                           /*Navigator.push(context, MaterialPageRoute(builder: (context) => payment_alert_dialog()))*/
                         },

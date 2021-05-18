@@ -33,11 +33,17 @@ class _BuyTicketState extends State<BuyTicket> {
   int day3 = DateTime.now().day + 3;
   int day4 = DateTime.now().day + 4;
   var selected = {};
+  var menuSelected = {};
+
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PurchaseModel>(context, listen: false)
-        .setData(widget.title, widget.price);
+    Provider.of<PurchaseModel>(context, listen: false).selected = selected;
+    Provider.of<PurchaseModel>(context, listen: false).date = day0.toString() + " " + DateFormat('EEEE').format(DateTime.now());
+    Provider.of<PurchaseModel>(context, listen: false).time = "15:00";
+    Provider.of<PurchaseModel>(context, listen: false).pay = 0;
+    Provider.of<PurchaseModel>(context, listen: false).menuSelected = menuSelected;
+    Provider.of<PurchaseModel>(context, listen: false).setData(widget.title, widget.price);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color.fromRGBO(110, 15, 186, 1.0),
@@ -273,6 +279,7 @@ class _SeleccionHorasState extends State<SeleccionHoras> {
               price: widget.widget.price,
                 onSelect: () {
                   setState(() {
+                    
                     Provider.of<PurchaseModel>(context, listen: false).getTime((15 + index).toString() + ":00");
                     this.selected = index;
                   });

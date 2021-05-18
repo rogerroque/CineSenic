@@ -9,7 +9,7 @@ class CinemaSeat extends StatefulWidget {
   var onTap2;
   var butaca;
 
-  CinemaSeat({this.isSelected = false, this.isReserved = false, this.onTap2, this.butaca});
+  CinemaSeat({this.isSelected = false, this.isReserved, this.onTap2, this.butaca});
 
   @override
   _CinemaSeatState createState() => _CinemaSeatState();
@@ -22,11 +22,9 @@ class _CinemaSeatState extends State<CinemaSeat> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-
         setState(() {
           !widget.isReserved ? widget.isSelected = !widget.isSelected : null;
-          widget.onTap2(widget.isSelected, widget.butaca);
-
+          widget.onTap2(widget.isReserved, widget.isSelected, widget.butaca);
         });
       },
       child: Container(
@@ -34,14 +32,9 @@ class _CinemaSeatState extends State<CinemaSeat> {
           width: MediaQuery.of(context).size.width / 15,
           height: MediaQuery.of(context).size.width / 15,
           decoration: BoxDecoration(
-              color: widget.isSelected
-                  ? kPimaryColor
-                  : widget.isReserved ? Colors.white : null,
-              border: !widget.isSelected && !widget.isReserved
-                  ? Border.all(color: Colors.white, width: 1.0)
-                  : null,
+              color: widget.isSelected ? kPimaryColor : widget.isReserved ? Colors.white : null,
+              border: !widget.isSelected && !widget.isReserved ? Border.all(color: Colors.white, width: 1.0) : null,
               borderRadius: BorderRadius.circular(5.0))),
     );
-
   }
 }
