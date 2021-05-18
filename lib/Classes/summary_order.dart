@@ -31,6 +31,7 @@ class _summary_orderState extends State<summary_order> {
     var numberOfMenus = menusMap.length;
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(38, 36, 75, 1.0),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -140,8 +141,7 @@ class _summary_orderState extends State<summary_order> {
                                    color: Colors.white
                                ),
                              ),
-                             Text(
-                               date,
+                             Text(date == null ? '' : date,
                                style: TextStyle(
                                    fontSize: 13.5,
                                    fontWeight: FontWeight.normal,
@@ -199,7 +199,7 @@ class _summary_orderState extends State<summary_order> {
                                   ),
                                 ),
                                 Text(
-                                  at,
+                                  at == null ? '' : at,
                                   style: TextStyle(
                                       fontSize: 13.5,
                                       fontWeight: FontWeight.normal,

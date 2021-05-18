@@ -23,7 +23,7 @@ class _profileState extends State<profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(250, 29, 41, 113),
+      backgroundColor: Color.fromRGBO(110, 15, 186, 1.0),
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -537,12 +537,12 @@ class _profileState extends State<profile> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.yellow.withOpacity(0.8),
+                      primary: Colors.blue.withOpacity(0.8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                         side: BorderSide(
                           color: Colors.white,
-                          width: 3
+                          width: 1.5
                         )
                       ),
 

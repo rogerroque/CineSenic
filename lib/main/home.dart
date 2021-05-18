@@ -29,15 +29,15 @@ class _homeState extends State<home> {
       /*resizeToAvoidBottomInset: false,*/
       key: scaffoldKey,
       drawer: buildDrawer(),
-      body: Container(
+      body: SafeArea(
         child: Container(
           child: Stack(
             children: <Widget> [
 
               SizedBox(
-              child:SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height + 36,
+              child:SizedBox(
+                height: MediaQuery.of(context).size.height,
+                /*height: MediaQuery.of(context).size.height + 36,*/
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
@@ -119,13 +119,9 @@ class _homeState extends State<home> {
                           ],
                         ),
                       ),
-                    ),
-
-
-
               ),
               Container(
-                margin: EdgeInsets.only(top: 30, left: 5),
+                margin: EdgeInsets.only(top: 10, left: 5),
                 child: Row(
                     children: <Widget> [
                       IconButton(
@@ -139,7 +135,7 @@ class _homeState extends State<home> {
               ),],
     ),
     ),
-    ),
+      ),
     );
   }
 }
@@ -170,27 +166,34 @@ class MovieCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
-          child: InkWell(
-            onTap: callBack,
-            child: SizedBox(
-              width: active
-                  ? MediaQuery.of(context).size.width / 3
-                  : MediaQuery.of(context).size.width / 4,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25.0),
-                child: Image.network(imageLink),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: Text(active ? title : '',
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width >= 720 ? 28.0 : 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              )),
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 30),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: InkWell(
+              onTap: callBack,
+              child: SizedBox(
+                width: active
+                    ? MediaQuery.of(context).size.width / 3
+                    : MediaQuery.of(context).size.width / 4,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25.0),
+                  child: Image.network(imageLink),
+                ),
               ),
             ),
           ),
         ),
-        Text(active ? title : '',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
+
       ],
     );
   }

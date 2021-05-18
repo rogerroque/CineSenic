@@ -19,7 +19,6 @@ class BuyTicket extends StatefulWidget {
   var videoURL;
   var date;
   var image;
-
   BuyTicket(this.title, this.price, this.director, this.actor, this.synopsis, this.videoURL, this.image);
 
   @override
@@ -39,40 +38,77 @@ class _BuyTicketState extends State<BuyTicket> {
   Widget build(BuildContext context) {
     Provider.of<PurchaseModel>(context, listen: false)
         .setData(widget.title, widget.price);
-
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: kBackgroundColor,
-      body: SingleChildScrollView(
-        child: SafeArea(
+      backgroundColor: Color.fromRGBO(110, 15, 186, 1.0),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(110, 15, 186, 1.0),
+        child: Container(
+          margin: EdgeInsets.only(top: 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Consumer<PurchaseModel>(
+                    builder: (context, pay, child) {
+                      return Text(
+                        pay.pay.toString() + " €",
+                        style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      );
+                    }),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width >= 720 ? 60 : 25, vertical: MediaQuery.of(context).size.height >= 1280 ? 15 : 6),
+                decoration: BoxDecoration(
+
+                    color: kActionColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0))),
+                child: InkWell(
+                    onTap: () => {
+                      Provider.of<PurchaseModel>(context, listen: false).getButacasSelected(selected),
+                      Provider.of<PurchaseModel>(context, listen: false).getMovieData(widget.title, widget.image),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => menu()))
+                    },
+                    child: Text('Continue',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold))),
+              )
+            ],
+          ),
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_sharp),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(widget.title),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(top: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_sharp,
-                          size: 28.0,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                    Text(
-                      widget.title,
-                      style: TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.5,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: EdgeInsets.only(top: 0),
                   child: YoutubePlayer(
                     controller: YoutubePlayerController(
                       initialVideoId: widget.videoURL,
@@ -181,7 +217,7 @@ class _BuyTicketState extends State<BuyTicket> {
                   ),
                   width: MediaQuery.of(context).size.width * .98,
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.blue[700],
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       topLeft: Radius.circular(15.0),
@@ -199,49 +235,6 @@ class _BuyTicketState extends State<BuyTicket> {
                 ),
                 Center(child: Image.asset('assets/images/screen.png')),
                 Butacas(price: widget.price, selected: selected),
-                Container(
-                  margin: EdgeInsets.only(top: 40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25.0),
-                        child: Consumer<PurchaseModel>(
-                            builder: (context, pay, child) {
-                          return Text(
-                            pay.pay.toString() + " €",
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          );
-                        }),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 40.0, vertical: 10.0),
-                        decoration: BoxDecoration(
-                            color: kActionColor,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0))),
-                        child: InkWell(
-                            onTap: () => {
-                                  Provider.of<PurchaseModel>(context, listen: false).getButacasSelected(selected),
-                                  Provider.of<PurchaseModel>(context, listen: false).getMovieData(widget.title, widget.image),
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => menu()))
-                                },
-                            child: Text('Continue',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.0,
-                                    fontWeight: FontWeight.bold))),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
           ),

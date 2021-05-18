@@ -14,7 +14,7 @@ class drawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
-        color: Color.fromRGBO(29, 85, 168, 1.0),
+        color: Color.fromRGBO(110, 15, 186, 1.0),
         child: Column(
           children: <Widget>[
 
