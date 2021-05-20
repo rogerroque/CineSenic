@@ -17,6 +17,8 @@ class home extends StatefulWidget {
 
 // ignore: camel_case_types
 class _homeState extends State<home> {
+  final homeKey = GlobalKey<_homeState>();
+
   @override
   Widget build(BuildContext context) {
     final String backgroundImage = movies[widget.index].imageURL;
@@ -24,10 +26,11 @@ class _homeState extends State<home> {
     final String rating = movies[widget.index].rating.toString();
     final String year = movies[widget.index].date.year.toString();
     final String categories = movies[widget.index].categories;
-    var scaffoldKey = GlobalKey<ScaffoldState>();
+    var drawerKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
       /*resizeToAvoidBottomInset: false,*/
-      key: scaffoldKey,
+      key: drawerKey,
       drawer: buildDrawer(),
       body: SafeArea(
         child: Container(
@@ -35,6 +38,7 @@ class _homeState extends State<home> {
             children: <Widget> [
 
               Stack(
+                key: homeKey,
                 fit: StackFit.expand,
                 children: <Widget>[
                   BackgroundGradientImage(
@@ -46,8 +50,8 @@ class _homeState extends State<home> {
                   Column(
                     children: [
                       Padding(padding: EdgeInsets.all(10.0)),
-                      /*MovieAppBar(),*/
 
+                      /*MovieAppBar(),*/
                       Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                       Image.network(logoImage, height: 120),
                       Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
@@ -122,7 +126,7 @@ class _homeState extends State<home> {
                     children: <Widget> [
                       IconButton(
                         icon: Icon(Icons.menu, color: Colors.white),
-                        onPressed: () => scaffoldKey.currentState.openDrawer(),
+                        onPressed: () => drawerKey.currentState.openDrawer(),
                       ),
 
                       /*SearchBar(hint: 'Search Movies..',),*/
