@@ -35,7 +35,6 @@ class _BuyTicketState extends State<BuyTicket> {
   var selected = {};
   var menuSelected = {};
 
-
   @override
   Widget build(BuildContext context) {
     Provider.of<PurchaseModel>(context, listen: false).selected = selected;
@@ -44,6 +43,8 @@ class _BuyTicketState extends State<BuyTicket> {
     Provider.of<PurchaseModel>(context, listen: false).pay = 0;
     Provider.of<PurchaseModel>(context, listen: false).menuSelected = menuSelected;
     Provider.of<PurchaseModel>(context, listen: false).setData(widget.title, widget.price);
+    Butacas butacas = Butacas(price: widget.price, selected: selected);
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color.fromRGBO(110, 15, 186, 1.0),
@@ -232,15 +233,15 @@ class _BuyTicketState extends State<BuyTicket> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
-                    child: SeleccionFechas(day0: day0),
+                    child: SeleccionFechas(day0: day0, butacas: butacas),
                   ),
                 ),
                 Container(
                   height: 120,
-                  child: SeleccionHoras(widget: widget),
+                  child: SeleccionHoras(widget: widget, butacas: butacas),
                 ),
                 Center(child: Image.asset('assets/images/screen.png')),
-                Butacas(price: widget.price, selected: selected),
+                butacas,
               ],
             ),
           ),
@@ -253,9 +254,10 @@ class _BuyTicketState extends State<BuyTicket> {
 class SeleccionHoras extends StatefulWidget {
   const SeleccionHoras({
     Key key,
-    @required this.widget,
+    @required this.widget, this.butacas,
   }) : super(key: key);
 
+  final Butacas butacas;
   final BuyTicket widget;
 
   @override
@@ -267,7 +269,7 @@ class _SeleccionHorasState extends State<SeleccionHoras> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+      return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: 5,
       itemBuilder: (context, index) {
@@ -279,7 +281,7 @@ class _SeleccionHorasState extends State<SeleccionHoras> {
               price: widget.widget.price,
                 onSelect: () {
                   setState(() {
-                    
+                    widget.butacas.refresh();
                     Provider.of<PurchaseModel>(context, listen: false).getTime((15 + index).toString() + ":00");
                     this.selected = index;
                   });
@@ -295,9 +297,10 @@ class _SeleccionHorasState extends State<SeleccionHoras> {
 class SeleccionFechas extends StatefulWidget {
   const SeleccionFechas({
     Key key,
-    @required this.day0,
+    @required this.day0, this.butacas,
   }) : super(key: key);
 
+  final Butacas butacas;
   final int day0;
 
   @override
@@ -305,8 +308,8 @@ class SeleccionFechas extends StatefulWidget {
 }
 
 class _SeleccionFechasState extends State<SeleccionFechas> {
-
   int selected = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -322,6 +325,7 @@ class _SeleccionFechasState extends State<SeleccionFechas> {
               dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: index))),
               onSelect: () {
                 setState(() {
+                  widget.butacas.refresh();
                   Provider.of<PurchaseModel>(context, listen: false).getDate((widget.day0 + index).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
                   this.selected = index;
                 });

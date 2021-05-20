@@ -9,15 +9,28 @@ class Butacas extends StatefulWidget {
   var price;
   var selected = {};
 
+  final _butacaState bs = new _butacaState();
+
+  void refresh() {
+    bs.refresh();
+  }
   Butacas({this.price, this.selected});
 
   @override
-  _butacaState createState() => _butacaState();
+  _butacaState createState() => bs;
 }
 
 class _butacaState extends State<Butacas> {
   var butacasReservadas = {};
   var butacas = {};
+
+  void refresh() {
+    setState(() {
+      Provider.of<PurchaseModel>(context, listen: false).remove(widget.price * Provider.of<PurchaseModel>(context, listen: false).selected.length);
+      Provider.of<PurchaseModel>(context, listen: false).selected.clear();
+      butacasReservadas.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +40,12 @@ class _butacaState extends State<Butacas> {
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((result) {
-          // if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
+          if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
           butacas = result.get("butaca");
           for (var entry in butacas.entries) {
             butacasReservadas[entry.key] = entry.value;
           }
-          // }
+          }
         });
       });
     }
