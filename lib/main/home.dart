@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/drawer.dart';
 import 'package:login_app/components//const.dart';
@@ -5,6 +7,7 @@ import 'package:login_app/components/background_gradient_image.dart';
 import 'package:login_app/components/moviemodel.dart';
 import 'package:login_app/components/primary_rounder_button.dart';
 import 'package:login_app/components/red_rounded_action_button.dart';
+import 'package:login_app/components/reservasmodel.dart';
 import 'package:login_app/main/buy_ticket.dart';
 
 // ignore: must_be_immutable, camel_case_types
@@ -21,12 +24,39 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
+
+    void reserves() {
+      reservas.clear();
+      FirebaseFirestore.instance
+          .collection("Reservas")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          if (result.get("uid") == FirebaseAuth.instance.currentUser.uid) {
+            reservas.add(
+                new Reservas(
+                    movieName: result.get("movieName"),
+                    butacas: result.get("butaca"),
+                    date: result.get("date"),
+                    time: result.get("time"),
+                    menus: result.get("menus"),
+                    total: result.get("total").toString()
+                )
+            );
+            print(result.get("movieName"));
+          }
+        });
+      });
+    }
+
     final String backgroundImage = movies[widget.index].imageURL;
     final String logoImage = movies[widget.index].logo;
     final String rating = movies[widget.index].rating.toString();
     final String year = movies[widget.index].date.year.toString();
     final String categories = movies[widget.index].categories;
     var drawerKey = GlobalKey<ScaffoldState>();
+
+    reserves();
 
     return Scaffold(
       /*resizeToAvoidBottomInset: false,*/
@@ -126,7 +156,9 @@ class _homeState extends State<home> {
                     children: <Widget> [
                       IconButton(
                         icon: Icon(Icons.menu, color: Colors.white),
-                        onPressed: () => drawerKey.currentState.openDrawer(),
+                        onPressed: () => {
+                          drawerKey.currentState.openDrawer(),
+                        }
                       ),
 
                       /*SearchBar(hint: 'Search Movies..',),*/

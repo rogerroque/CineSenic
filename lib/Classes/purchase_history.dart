@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/reservasmodel.dart';
+
 
 class purchase_history extends StatelessWidget {
   @override
@@ -27,7 +29,7 @@ class purchase_history extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         iconSize: 30.0,
-                      ),alignment: Alignment.topLeft,
+                      ), alignment: Alignment.topLeft,
                     ),
 
                     Container(
@@ -44,7 +46,77 @@ class purchase_history extends StatelessWidget {
                   ],
                 ),
               ),
-
+              ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: reservas.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 90,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            color: Colors.grey,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        reservas[index].movieName,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      Text(
+                                        reservas[index].date,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        reservas[index].time,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      Text(
+                                        reservas[index].butacas.length.toString() + "X tickets",
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        reservas[index].total,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      Text(
+                                        reservas[index].menus.length.toString() + "X menus",
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
             ],
           ),
         ),

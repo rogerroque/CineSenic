@@ -325,11 +325,10 @@ class SeleccionFechas extends StatefulWidget {
 class _SeleccionFechasState extends State<SeleccionFechas> {
   int selected = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: 7,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Row(

@@ -11,7 +11,6 @@ class payment_alert_dialog extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: CupertinoAlertDialog(
-
         title: Text("Making the payment"),
         content: Column(
           children: <Widget> [

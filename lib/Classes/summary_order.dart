@@ -284,14 +284,8 @@ class _summary_orderState extends State<summary_order> {
 
                             String printMenusPrice() {
                               for (var entry in menusMap.entries) {
-                                if (entry.value == 0) {
-                                  menusMap.remove(entry);
-                                }
-                                if (entry.key == menus[index].name && !keysPrice.contains(entry.key)) {
-                                  keysPrice.add(entry.key);
-                                  double price = double.parse(menus[index].price);
-                                  return (price * entry.value).toString();
-                                }
+                                double price = double.parse(menus[index].price);
+                                return (price * entry.value).toString();
                               }
                             }
 
@@ -351,7 +345,9 @@ class _summary_orderState extends State<summary_order> {
                                   focusNode: FocusNode(),
                                   enableInteractiveSelection: false,
                                   obscureText: true,
+                                  onEditingComplete: () {
 
+                                  },
                                 ),
                               ),
                             )

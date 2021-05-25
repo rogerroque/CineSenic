@@ -20,9 +20,6 @@ class _menu extends State<menu> {
 
   @override
   Widget build(BuildContext context) {
-    for (var i = 0; i == widget.index; i++)
-    menus[i].contador = 0;
-
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         child: Container(
@@ -30,66 +27,61 @@ class _menu extends State<menu> {
           width: double.infinity,
           decoration: BoxDecoration(
             color: kBackgroundColor,
-          ),
-          child: Container(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25.0),
-                          child: Consumer<PurchaseModel>(
-                              builder: (context, pay, child) {
-                                return Text(
-                                  pay.pay.toString() + " €",
-                                  style: TextStyle(
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white
-                                  ),
-                                );
-                              }
-                          ),
+        ),
+        child: Container(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Consumer<PurchaseModel>(
+                            builder: (context, pay, child) {
+                              return Text(
+                                pay.pay.toString() + " €",
+                                style: TextStyle(
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white
+                                ),
+                              );
+                            }
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
-                          decoration: BoxDecoration(
-                              color: kActionColor,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0)
-                              )
-                          ),
-                          child: InkWell(
-                              onTap: () => {
-                                for (var entry in menuSelected.entries) {
-                                  if (entry.value == 0) {
-                                    menuSelected.remove(entry)
-                                  }
-                                },
-                                Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
-                              },
-                              child: Text('Continue',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold
-                                  )
-                              )
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                        decoration: BoxDecoration(
+                            color: kActionColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0)
+                            )
+                        ),
+                        child: InkWell(
+                            onTap: () => {
+                              Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
+                            },
+                            child: Text('Continue',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.bold
+                                )
+                            )
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
+        ),
         ),
       ),
       appBar: AppBar(
@@ -185,6 +177,9 @@ class _menu extends State<menu> {
                                               menus[index].contador--;
                                               Provider.of<PurchaseModel>(context, listen: false).remove(double.parse(menus[index].price));
                                               menuSelected[menus[index].name] = menus[index].contador;
+                                              if (menus[index].contador == 0) {
+                                                menuSelected.remove(menus[index].name);
+                                              }
                                               print(menuSelected);
                                             }
                                           });
