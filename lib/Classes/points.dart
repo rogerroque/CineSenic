@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/reservasmodel.dart';
 import 'package:login_app/main.dart';
 
 class points extends StatelessWidget {
+  var cinesenicPoints = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,9 @@ class points extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(top: 30),
-              child: Text("160", style: TextStyle(
+              child: Text(
+              cscpoints(),
+                style: TextStyle(
                 fontSize: 120,
                 fontWeight: FontWeight.bold
               ),),
@@ -33,5 +37,12 @@ class points extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String cscpoints() {
+    for (var entry in reservas) {
+      cinesenicPoints += entry.cscpoints;
+    }
+    return cinesenicPoints.toString();
   }
 }

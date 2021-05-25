@@ -40,7 +40,8 @@ class _homeState extends State<home> {
                     date: result.get("date"),
                     time: result.get("time"),
                     menus: result.get("menus"),
-                    total: result.get("total").toString()
+                    total: result.get("total").toString(),
+                    cscpoints: result.get("points")
                 )
             );
             print(result.get("movieName"));

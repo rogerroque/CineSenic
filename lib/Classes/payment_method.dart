@@ -18,7 +18,8 @@ class payment_method extends StatelessWidget {
         'date' : Provider.of<PurchaseModel>(context, listen: false).date,
         'time' : Provider.of<PurchaseModel>(context, listen: false).time,
         'total' : Provider.of<PurchaseModel>(context, listen: false).pay,
-        'uid' : FirebaseAuth.instance.currentUser.uid
+        'uid' : FirebaseAuth.instance.currentUser.uid,
+        'points' : 15
       });
     }
 
