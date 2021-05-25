@@ -47,11 +47,10 @@ class _BuyTicketState extends State<BuyTicket> {
 
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color.fromRGBO(110, 15, 186, 1.0),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(110, 15, 186, 1.0),
+        color: Color.fromRGBO(0, 0, 0, 1.0),
         child: Container(
-          margin: EdgeInsets.only(top: 0),
+          margin: EdgeInsets.only(top: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -109,6 +108,14 @@ class _BuyTicketState extends State<BuyTicket> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Color.fromRGBO(75, 75, 75, 1.0), Colors.black],
+                    stops: [0.3,0.7],
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter
+                )
+            ),
             margin: EdgeInsets.only(top: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -224,7 +231,15 @@ class _BuyTicketState extends State<BuyTicket> {
                   ),
                   width: MediaQuery.of(context).size.width * .98,
                   decoration: BoxDecoration(
-                    color: Colors.blue[700],
+                    gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment.center,
+                    colors: [
+                     Color.fromRGBO(236, 179, 5, 1),
+                      Colors.yellow[800]
+                    ],
+                  )
+                  ,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       topLeft: Radius.circular(15.0),

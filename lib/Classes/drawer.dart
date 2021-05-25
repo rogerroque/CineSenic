@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/Classes/points.dart';
 import 'package:login_app/Classes/politicas.dart';
 import 'package:login_app/Classes/profile.dart';
 import 'package:login_app/Classes/promotions.dart';
@@ -207,12 +208,17 @@ class drawer extends StatelessWidget {
                       Icons.fiber_smart_record_sharp,
                       size: 22,
                       color: Colors.yellow,
-                    ), onPressed: () {},
+                    ), onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => points())
+                    )},
                   ),
 
                   Container(
                     margin: EdgeInsets.only(left: 0),
                     child: InkWell(
+                      onTap: () => {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => points())
+                        )},
                       child: Text(
                         'CSC points',
                         style: TextStyle(
@@ -221,6 +227,7 @@ class drawer extends StatelessWidget {
                             color: Colors.white
                         ),
                       ),
+
                     ),
                   )
                 ],

@@ -40,7 +40,14 @@ class _CalendarDayState extends State<CalendarDay> {
                     style: TextStyle(
                         color: widget.isActive ? kBackgroundColor : Colors.white,
                         fontSize: 20.0,
-                        fontWeight: FontWeight.bold)),
+                        fontWeight: FontWeight.bold,
+                    shadows: [Shadow(
+                      blurRadius: widget.isActive ? 0.0 : 5.0,
+                      color: Colors.black,
+                      offset: Offset(
+                        0.5,0.5
+                      )
+                    )])),
                 Text(
                   widget.dayAbbreviation.toUpperCase(),
                   style: TextStyle(

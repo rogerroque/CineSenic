@@ -24,73 +24,72 @@ class _menu extends State<menu> {
     menus[i].contador = 0;
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 49,
           width: double.infinity,
           decoration: BoxDecoration(
             color: kBackgroundColor,
-        ),
-        child: Container(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25.0),
-                        child: Consumer<PurchaseModel>(
-                            builder: (context, pay, child) {
-                              return Text(
-                                pay.pay.toString() + " €",
-                                style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white
-                                ),
-                              );
-                            }
+          ),
+          child: Container(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25.0),
+                          child: Consumer<PurchaseModel>(
+                              builder: (context, pay, child) {
+                                return Text(
+                                  pay.pay.toString() + " €",
+                                  style: TextStyle(
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white
+                                  ),
+                                );
+                              }
+                          ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
-                        decoration: BoxDecoration(
-                            color: kActionColor,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0)
-                            )
-                        ),
-                        child: InkWell(
-                            onTap: () => {
-                              for (var entry in menuSelected.entries) {
-                                if (entry.value == 0) {
-                                  menuSelected.remove(entry)
-                                }
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                          decoration: BoxDecoration(
+                              color: kActionColor,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0)
+                              )
+                          ),
+                          child: InkWell(
+                              onTap: () => {
+                                for (var entry in menuSelected.entries) {
+                                  if (entry.value == 0) {
+                                    menuSelected.remove(entry)
+                                  }
+                                },
+                                Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
                               },
-                              Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
-                            },
-                            child: Text('Continue',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.0,
-                                    fontWeight: FontWeight.bold
-                                )
-                            )
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                              child: Text('Continue',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold
+                                  )
+                              )
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
         ),
       ),
       appBar: AppBar(
@@ -109,6 +108,15 @@ class _menu extends State<menu> {
           child: Column(
             children: <Widget> [
               Container(
+                height: 900,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Color.fromRGBO(75, 75, 75, 1.0), Colors.black],
+                        stops: [0.3,0.7],
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter
+                    )
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
