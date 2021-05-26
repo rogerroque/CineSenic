@@ -64,9 +64,16 @@ class _loginState extends State<login> {
         backgroundColor: Color.fromRGBO(212, 175, 55, 1),
       ),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromRGBO(38, 36, 75, 1.0),
       body: SingleChildScrollView(
         child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Color.fromRGBO(75, 75, 75, 1.0), Colors.black],
+                  stops: [0.0,0.9],
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter
+              )
+          ),
           padding: EdgeInsets.only(left: 20, right: 20),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -192,7 +199,7 @@ class _loginState extends State<login> {
                       }
                     }
                   },
-                  color: Color.fromRGBO(50, 57, 116, 1),
+                  color: Colors.transparent,
                   child:
                   Text('LOGIN', style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(

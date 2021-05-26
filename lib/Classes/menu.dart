@@ -100,7 +100,6 @@ class _menu extends State<menu> {
           child: Column(
             children: <Widget> [
               Container(
-                height: 900,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [Color.fromRGBO(75, 75, 75, 1.0), Colors.black],

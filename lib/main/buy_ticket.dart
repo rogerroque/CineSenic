@@ -96,7 +96,7 @@ class _BuyTicketState extends State<BuyTicket> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 0.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_sharp),
           onPressed: () {
@@ -235,7 +235,7 @@ class _BuyTicketState extends State<BuyTicket> {
                     begin: Alignment.bottomRight,
                     end: Alignment.center,
                     colors: [
-                     Color.fromRGBO(236, 179, 5, 1),
+                     Color.fromRGBO(236, 179, 5, 1.0),
                       Colors.yellow[800]
                     ],
                   )

@@ -1,49 +1,93 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/purchasemodel.dart';
+import 'package:provider/provider.dart';
 
 class promotions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(250, 29, 41, 113),
+      appBar: AppBar(
+        title: Text("Promotions"),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
+          child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Column(
 
-            children: <Widget>[
+              children: <Widget>[
 
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Row(
-                  children: <Widget>[
-
-                    Container(
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back_sharp),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        iconSize: 30.0,
-                      ),alignment: Alignment.topLeft,
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: 130,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
+                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
+                      fit: BoxFit.cover,
                     ),
-
-                    Container(
-                      child: Text(
-                        'Promotions',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'UbuntuMedium',
-                            color: Colors.white
-                        ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10, bottom: 10),
+                      child: Text("Coupon: ABC123", style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.white
+                      ),)
+                    ),
+                  )
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: 130,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
+                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                    child: Container(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                          padding: EdgeInsets.only(right: 10, bottom: 10),
+                          child: Text("Coupon: ABC123", style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                              color: Colors.white
+                          ),)
                       ),
                     )
-
-                  ],
                 ),
-              ),
-
-            ],
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: 130,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
+                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                    child: Container(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                          padding: EdgeInsets.only(right: 10, bottom: 10),
+                          child: Text("Coupon: ABC123", style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                              color: Colors.white
+                          ),)
+                      ),
+                    )
+                ),
+              ],
+            ),
           ),
         ),
       ),

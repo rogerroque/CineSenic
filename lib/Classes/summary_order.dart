@@ -31,7 +31,6 @@ class _summary_orderState extends State<summary_order> {
     var numberOfMenus = menusMap.length;
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(38, 36, 75, 1.0),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -385,6 +384,7 @@ class _summary_orderState extends State<summary_order> {
                           onChanged: (tarjetas value) {
                             setState(() {
                               _character = value;
+                              print(value);
                             });
                           },
                         ),
