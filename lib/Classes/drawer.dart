@@ -15,7 +15,14 @@ class drawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
-        color: Color.fromRGBO(110, 15, 186, 1.0),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color.fromRGBO(75, 75, 75, 1.0), Colors.black],
+                stops: [0.0,0.9],
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter
+            )
+        ),
         child: Column(
           children: <Widget>[
 
@@ -374,15 +381,15 @@ class drawer extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     /*child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.white,),*/
-                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.white,),
+                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.yellow,),
                   ),
                   SizedBox(width: 10,),
                   Container(
-                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.white,),
+                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.yellow,),
                   ),
                   SizedBox(width: 10,),
                   Container(
-                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.white,),
+                    child: Icon(Icons.fiber_smart_record_sharp, size: 45, color: Colors.yellow,),
                   ),
                 ],
               ),

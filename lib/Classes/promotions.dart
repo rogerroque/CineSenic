@@ -26,9 +26,9 @@ class promotions extends StatelessWidget {
                   itemCount: promotionsList.length,
                   itemBuilder: (context, index) {
                     return Container(
-                        margin: EdgeInsets.only(top: 20),
-                        height: 130,
-                        color: Colors.grey,
+                        margin: EdgeInsets.only(top: 10),
+                        height: 80,
+                        color: Colors.yellow[600],
                         child: Container(
                           alignment: Alignment.bottomRight,
                           child: Container(

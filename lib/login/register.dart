@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/main/home.dart';
 
+import 'login.dart';
+
 class register extends StatefulWidget {
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -178,7 +180,7 @@ class _registerState extends State<register> {
                         if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => home()),
+                            MaterialPageRoute(builder: (context) => login()),
                           );
                         }
                       } on FirebaseAuthException catch (e) {
