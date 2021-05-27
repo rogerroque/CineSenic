@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/payment_method.dart';
 import 'package:login_app/components/menumodel.dart';
+import 'package:login_app/components/promotionsmodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
+import 'package:login_app/components/reservasmodel.dart';
 import 'package:login_app/login/login.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +26,14 @@ class _summary_orderState extends State<summary_order> {
     tarjetas _character = tarjetas.visa;
     var movieName = Provider.of<PurchaseModel>(context, listen: false).movieName;
     var keys = [];
-    var keysPrice = [];
+    var descuentos = {};
     Map butacas = Provider.of<PurchaseModel>(context, listen: false).selected;
     Map menusMap = Provider.of<PurchaseModel>(context, listen: false).menuSelected;
     var numberOfTickets = butacas.length;
     var numberOfMenus = menusMap.length;
+    var priceToPay = Provider.of<PurchaseModel>(context, listen: false).pay;
+
+    descuentos = reservas.asMap();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -284,7 +289,7 @@ class _summary_orderState extends State<summary_order> {
                             String printMenusPrice() {
                               for (var entry in menusMap.entries) {
                                 double price = double.parse(menus[index].price);
-                                return (price * entry.value).toString();
+                                return (price * entry.value).toStringAsFixed(2);
                               }
                             }
 
@@ -343,9 +348,16 @@ class _summary_orderState extends State<summary_order> {
                                 child: TextField(
                                   focusNode: FocusNode(),
                                   enableInteractiveSelection: false,
-                                  obscureText: true,
-                                  onEditingComplete: () {
-
+                                  onChanged: (text) {
+                                    for (var entry in promotionsList) {
+                                      print(text);
+                                      print(entry.code);
+                                      if (text == entry.code) {
+                                         Provider.of<PurchaseModel>(context, listen: false).applyPromotion(entry.percentage);
+                                       } else {
+                                        Provider.of<PurchaseModel>(context, listen: false).resetPay(priceToPay);
+                                      }
+                                     }
                                   },
                                 ),
                               ),
@@ -356,13 +368,17 @@ class _summary_orderState extends State<summary_order> {
                         Container(
                           margin: EdgeInsets.only(top: 40, bottom: 10, right: 10),
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            'Total: ' + Provider.of<PurchaseModel>(context, listen: false).pay.toString() + '€',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.yellow,
-                            ),
+                          child: Consumer<PurchaseModel>(
+                              builder: (context, pay, child) {
+                                return Text(
+                                  "Total: " + pay.pay.toStringAsFixed(2) + " €",
+                                  style: TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.yellow
+                                  ),
+                                );
+                              }
                           ),
                         ),
                       ],

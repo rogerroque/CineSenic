@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/promotionsmodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,71 +21,28 @@ class promotions extends StatelessWidget {
 
               children: <Widget>[
 
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  height: 130,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
-                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      padding: EdgeInsets.only(right: 10, bottom: 10),
-                      child: Text("Coupon: ABC123", style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.white
-                      ),)
-                    ),
-                  )
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  height: 130,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
-                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                    child: Container(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                          padding: EdgeInsets.only(right: 10, bottom: 10),
-                          child: Text("Coupon: ABC123", style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.white
-                          ),)
-                      ),
-                    )
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  height: 130,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.150), BlendMode.dstATop),
-                      image: NetworkImage(Provider.of<PurchaseModel>(context, listen: false).imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                    child: Container(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                          padding: EdgeInsets.only(right: 10, bottom: 10),
-                          child: Text("Coupon: ABC123", style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.white
-                          ),)
-                      ),
-                    )
+                ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: promotionsList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                        margin: EdgeInsets.only(top: 20),
+                        height: 130,
+                        color: Colors.grey,
+                        child: Container(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                              padding: EdgeInsets.only(right: 10, bottom: 10),
+                              child: Text("Coupon: " + promotionsList[index].code, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  color: Colors.white
+                              ),)
+                          ),
+                        )
+                    );
+                  },
                 ),
               ],
             ),

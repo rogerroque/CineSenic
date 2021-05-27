@@ -43,7 +43,7 @@ class _menu extends State<menu> {
                         child: Consumer<PurchaseModel>(
                             builder: (context, pay, child) {
                               return Text(
-                                pay.pay.toString() + " €",
+                                pay.pay.toStringAsFixed(2) + " €",
                                 style: TextStyle(
                                     fontSize: 30.0,
                                     fontWeight: FontWeight.bold,

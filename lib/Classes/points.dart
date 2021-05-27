@@ -39,7 +39,7 @@ class points extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 10),
-                child: Text("160", style: TextStyle(
+                child: Text(cscpoints(), style: TextStyle(
                   fontSize: 120,
                   fontWeight: FontWeight.bold,
                   color: Color.fromRGBO(236, 179, 5, 1.0),

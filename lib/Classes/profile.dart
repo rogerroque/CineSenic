@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/components/reservasmodel.dart';
 import 'dart:math' as math;
 
 import 'package:login_app/login/login.dart';
@@ -15,13 +16,21 @@ class _profileState extends State<profile> {
 
   bool stateFacebook = false;
   bool stateNotifications = false;
+  var cinesenicPoints = 0;
 
   bool editUsername = false;
-  TextEditingController _editingController;
   String username = FirebaseAuth.instance.currentUser.displayName;
 
   @override
   Widget build(BuildContext context) {
+
+    String cscpoints() {
+      for (var entry in reservas) {
+        cinesenicPoints += entry.cscpoints;
+      }
+      return cinesenicPoints.toString();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
@@ -259,7 +268,7 @@ class _profileState extends State<profile> {
                 Container(
                   margin: EdgeInsets.only(top: 5),
                   child: Text(
-                    '500',
+                    cscpoints(),
                     style: TextStyle(
                         color: Colors.yellow,
                         fontSize: 16,

@@ -52,4 +52,18 @@ class PurchaseModel extends ChangeNotifier {
   void getTime(var time) {
     this.time = time;
   }
+
+  void applyPromotion(var percentage) {
+    var discount = (percentage / 100);
+    var discountedPrice = pay * discount;
+    print(discount);
+    print(discountedPrice);
+    pay = pay - discountedPrice;
+    notifyListeners();
+  }
+
+  void resetPay(double priceToPay) {
+    pay = priceToPay;
+    notifyListeners();
+  }
 }

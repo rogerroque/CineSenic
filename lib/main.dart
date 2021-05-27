@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/const.dart';
+import 'package:login_app/components/promotionsmodel.dart';
 import 'package:login_app/components/purchasemodel.dart';
 import 'package:login_app/login/login.dart';
 import 'package:provider/provider.dart';
@@ -70,6 +71,25 @@ class App extends StatelessWidget {
       });
     }
 
+    void _loadPromotions() {
+      FirebaseFirestore.instance
+          .collection("Promotions")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          promotionsList.add(
+            new Promotion(
+                name: result.get("Name"),
+                description: result.get("Description"),
+                code: result.get("Code"),
+                percentage: result.get("Percentage")
+            ),
+          );
+          print(result.get("Name"));
+        });
+      });
+    }
+
     return MaterialApp(
       theme: theme,
       home: FutureBuilder(
@@ -87,6 +107,7 @@ class App extends StatelessWidget {
             print('Conectado a Firebase');
             _loadMovies();
             _loadMenus();
+            _loadPromotions();
             return login();
           }
 
