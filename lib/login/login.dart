@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_app/Classes/politicas.dart';
 import 'package:login_app/Classes/summary_order.dart';
 import 'package:login_app/login/register.dart';
@@ -193,8 +194,14 @@ class _loginState extends State<login> {
                       }
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {
+                        Fluttertoast.showToast(
+                          msg: "Usuario no encontrado con ese email"
+                        );
                         print('No user found for that email.');
                       } else if (e.code == 'wrong-password') {
+                        Fluttertoast.showToast(
+                            msg: "Contraseña Incorrecta"
+                        );
                         print('Wrong password provided for that user.');
                       }
                     }
