@@ -334,6 +334,7 @@ class _SeleccionFechasState extends State<SeleccionFechas> {
               onSelect: () {
                 setState(() {
                   widget.butacas.refresh();
+                  print(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
                   Provider.of<PurchaseModel>(context, listen: false).getDate(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
                   this.selected = index;
                 });

@@ -447,6 +447,7 @@ class _summary_orderState extends State<summary_order> {
                     onPressed: () => {
                       Provider.of<PurchaseModel>(context, listen: false).menuSelected = menusMap,
                       Provider.of<PurchaseModel>(context, listen: false).pay = payment,
+                      Provider.of<PurchaseModel>(context, listen: false).date = date,
                       Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
                     },
                     child: Text(

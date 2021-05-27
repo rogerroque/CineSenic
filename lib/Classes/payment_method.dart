@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Classes/making_payment_alert_dialog.dart';
 import 'package:login_app/components/purchasemodel.dart';
+import 'package:login_app/main/home.dart';
 import 'package:provider/provider.dart';
 
 class payment_method extends StatelessWidget {
@@ -69,7 +70,7 @@ class payment_method extends StatelessWidget {
 
                   Container(
                     margin: EdgeInsets.only(top: 20),
-                    child: Text('Paymeny methodd', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+                    child: Text('Payment method', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
                   ),
 
                   Container(
@@ -147,7 +148,7 @@ class payment_method extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => {
                           reserved(),
-                          showDialog(context: context, builder: (context) => payment_alert_dialog())
+                          showDialog(context: context, builder: (context) => home())
                           /*Navigator.push(context, MaterialPageRoute(builder: (context) => payment_alert_dialog()))*/
                         },
                         child: Text(
