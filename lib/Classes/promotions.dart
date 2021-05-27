@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/promotionsmodel.dart';
-import 'package:login_app/components/purchasemodel.dart';
-import 'package:provider/provider.dart';
 
 class promotions extends StatelessWidget {
   @override
