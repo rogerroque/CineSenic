@@ -518,6 +518,7 @@ class _profileState extends State<profile> {
 
                       child: ElevatedButton(
                         onPressed: () => {
+                          FirebaseAuth.instance.signOut(),
                           Navigator.push(context, MaterialPageRoute(builder: (context) => login()))
                         },
                         child: Text(

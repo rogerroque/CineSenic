@@ -58,8 +58,6 @@ class _homeState extends State<home> {
     final String categories = movies[widget.index].categories;
     var drawerKey = GlobalKey<ScaffoldState>();
 
-    reserves();
-
     return Scaffold(
       /*resizeToAvoidBottomInset: false,*/
       key: drawerKey,
@@ -159,7 +157,8 @@ class _homeState extends State<home> {
                       IconButton(
                         icon: Icon(Icons.menu, color: Colors.white),
                         onPressed: () => {
-                          drawerKey.currentState.openDrawer(),
+                            reserves(),
+                            drawerKey.currentState.openDrawer(),
                         }
                       ),
 

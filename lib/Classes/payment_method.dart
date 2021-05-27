@@ -18,7 +18,7 @@ class payment_method extends StatelessWidget {
         'movieName' : Provider.of<PurchaseModel>(context, listen: false).movieName,
         'date' : Provider.of<PurchaseModel>(context, listen: false).date,
         'time' : Provider.of<PurchaseModel>(context, listen: false).time,
-        'total' : Provider.of<PurchaseModel>(context, listen: false).pay,
+        'total' : Provider.of<PurchaseModel>(context, listen: false).pay.toStringAsFixed(2),
         'uid' : FirebaseAuth.instance.currentUser.uid,
         'points' : 15,
         'image' : Provider.of<PurchaseModel>(context, listen: false).imageUrl

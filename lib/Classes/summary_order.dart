@@ -230,7 +230,7 @@ class _summary_orderState extends State<summary_order> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 10, left: 50),
                                 child: Text(
-                                  'X' + numberOfTickets.toString() + ' butacas',
+                                  'X' + numberOfTickets.toString() + ' Butacas',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -286,8 +286,10 @@ class _summary_orderState extends State<summary_order> {
 
                             String printMenusPrice() {
                               for (var entry in menusMap.entries) {
-                                double price = double.parse(menus[index].price);
-                                return (price * entry.value).toStringAsFixed(2);
+                                if (entry.key == menus[index].name) {
+                                  double price = double.parse(menus[index].price);
+                                  return (price * entry.value).toStringAsFixed(2);
+                                }
                               }
                             }
 
