@@ -33,12 +33,13 @@ class _BuyTicketState extends State<BuyTicket> {
   @override
   Widget build(BuildContext context) {
     Provider.of<PurchaseModel>(context, listen: false).selected = selected;
-    Provider.of<PurchaseModel>(context, listen: false).date = DateTime.now().toString() + " " + DateFormat('EEEE').format(DateTime.now());
+    Provider.of<PurchaseModel>(context, listen: false).date = DateFormat('d').format(DateTime.now()) + " " + DateFormat('EEEE').format(DateTime.now());
     Provider.of<PurchaseModel>(context, listen: false).time = "15:00";
     Provider.of<PurchaseModel>(context, listen: false).pay = 0;
     Provider.of<PurchaseModel>(context, listen: false).menuSelected = menuSelected;
     Provider.of<PurchaseModel>(context, listen: false).setData(widget.title, widget.price);
     Butacas butacas = Butacas(price: widget.price, selected: selected);
+
 
     return Scaffold(
       key: _scaffoldKey,
@@ -329,13 +330,12 @@ class _SeleccionFechasState extends State<SeleccionFechas> {
           children: <Widget>[
             CalendarDay(
               isActive: index == selected,
-              dayNumber: DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString(),
+              dayNumber: DateFormat('d').format(DateTime.now().add(Duration(days: index))),
               dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: index))),
               onSelect: () {
                 setState(() {
                   widget.butacas.refresh();
-                  print(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
-                  Provider.of<PurchaseModel>(context, listen: false).getDate(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
+                  Provider.of<PurchaseModel>(context, listen: false).getDate(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))).toString());
                   this.selected = index;
                 });
               }

@@ -33,7 +33,6 @@ class _summary_orderState extends State<summary_order> {
     var numberOfMenus = menusMap.length;
     var priceToPay = Provider.of<PurchaseModel>(context, listen: false).pay;
 
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -350,9 +349,11 @@ class _summary_orderState extends State<summary_order> {
                                   onChanged: (text) {
                                     for (var entry in promotionsList) {
                                       print(text);
+                                      print('Codigos');
                                       print(entry.code);
                                       if (text == entry.code) {
                                          Provider.of<PurchaseModel>(context, listen: false).applyPromotion(entry.percentage);
+                                         break;
                                        } else {
                                         Provider.of<PurchaseModel>(context, listen: false).resetPay(priceToPay);
                                       }
@@ -447,7 +448,6 @@ class _summary_orderState extends State<summary_order> {
                     onPressed: () => {
                       Provider.of<PurchaseModel>(context, listen: false).menuSelected = menusMap,
                       Provider.of<PurchaseModel>(context, listen: false).pay = payment,
-                      Provider.of<PurchaseModel>(context, listen: false).date = date,
                       Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
                     },
                     child: Text(

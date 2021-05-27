@@ -40,6 +40,8 @@ class _butacaState extends State<Butacas> {
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((result) {
+          print(result.get("date"));
+          print(Provider.of<PurchaseModel>(context, listen: false).date);
           if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
           butacas = result.get("butaca");
           for (var entry in butacas.entries) {

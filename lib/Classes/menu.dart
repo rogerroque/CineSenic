@@ -64,6 +64,7 @@ class _menu extends State<menu> {
                         child: InkWell(
                             onTap: () => {
                               Provider.of<PurchaseModel>(context, listen: false).getMenusSelected(menuSelected),
+                              for (var entry in menus) entry.contador = 0,
                               Navigator.push(context, MaterialPageRoute(builder: (context) => summary_order()))
                             },
                             child: Text('Continue',
