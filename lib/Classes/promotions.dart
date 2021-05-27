@@ -35,7 +35,7 @@ class promotions extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: Container(
                               padding: EdgeInsets.only(right: 10, bottom: 10),
-                              child: Text("Coupon: " + promotionsList[index].code, style: TextStyle(
+                              child: Text("Code: " + promotionsList[index].code, style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25,
                                   color: Colors.white

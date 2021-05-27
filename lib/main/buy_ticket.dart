@@ -27,18 +27,13 @@ class BuyTicket extends StatefulWidget {
 
 class _BuyTicketState extends State<BuyTicket> {
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
-  int day0 = DateTime.now().day;
-  int day1 = DateTime.now().day + 1;
-  int day2 = DateTime.now().day + 2;
-  int day3 = DateTime.now().day + 3;
-  int day4 = DateTime.now().day + 4;
   var selected = {};
   var menuSelected = {};
 
   @override
   Widget build(BuildContext context) {
     Provider.of<PurchaseModel>(context, listen: false).selected = selected;
-    Provider.of<PurchaseModel>(context, listen: false).date = day0.toString() + " " + DateFormat('EEEE').format(DateTime.now());
+    Provider.of<PurchaseModel>(context, listen: false).date = DateTime.now().toString() + " " + DateFormat('EEEE').format(DateTime.now());
     Provider.of<PurchaseModel>(context, listen: false).time = "15:00";
     Provider.of<PurchaseModel>(context, listen: false).pay = 0;
     Provider.of<PurchaseModel>(context, listen: false).menuSelected = menuSelected;
@@ -248,7 +243,7 @@ class _BuyTicketState extends State<BuyTicket> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
-                    child: SeleccionFechas(day0: day0, butacas: butacas),
+                    child: SeleccionFechas(butacas: butacas),
                   ),
                 ),
                 Container(
@@ -312,11 +307,10 @@ class _SeleccionHorasState extends State<SeleccionHoras> {
 class SeleccionFechas extends StatefulWidget {
   const SeleccionFechas({
     Key key,
-    @required this.day0, this.butacas,
+    this.butacas,
   }) : super(key: key);
 
   final Butacas butacas;
-  final int day0;
 
   @override
   _SeleccionFechasState createState() => _SeleccionFechasState();
@@ -335,12 +329,12 @@ class _SeleccionFechasState extends State<SeleccionFechas> {
           children: <Widget>[
             CalendarDay(
               isActive: index == selected,
-              dayNumber: (widget.day0 + index).toString(),
+              dayNumber: DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString(),
               dayAbbreviation: DateFormat('E').format(DateTime.now().add(Duration(days: index))),
               onSelect: () {
                 setState(() {
                   widget.butacas.refresh();
-                  Provider.of<PurchaseModel>(context, listen: false).getDate((widget.day0 + index).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
+                  Provider.of<PurchaseModel>(context, listen: false).getDate(DateFormat('d').format(DateTime.now().add(Duration(days: index))).toString() + " " + DateFormat('EEEE').format(DateTime.now().add(Duration(days: index))));
                   this.selected = index;
                 });
               }
