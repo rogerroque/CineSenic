@@ -15,6 +15,7 @@ class promotions extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             child: Column(

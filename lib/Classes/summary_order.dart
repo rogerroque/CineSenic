@@ -26,14 +26,13 @@ class _summary_orderState extends State<summary_order> {
     tarjetas _character = tarjetas.visa;
     var movieName = Provider.of<PurchaseModel>(context, listen: false).movieName;
     var keys = [];
-    var descuentos = {};
+    var payment;
     Map butacas = Provider.of<PurchaseModel>(context, listen: false).selected;
     Map menusMap = Provider.of<PurchaseModel>(context, listen: false).menuSelected;
     var numberOfTickets = butacas.length;
     var numberOfMenus = menusMap.length;
     var priceToPay = Provider.of<PurchaseModel>(context, listen: false).pay;
 
-    descuentos = reservas.asMap();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -370,6 +369,8 @@ class _summary_orderState extends State<summary_order> {
                           alignment: Alignment.centerRight,
                           child: Consumer<PurchaseModel>(
                               builder: (context, pay, child) {
+                                payment = pay.pay;
+                                print(payment);
                                 return Text(
                                   "Total: " + pay.pay.toStringAsFixed(2) + " €",
                                   style: TextStyle(
@@ -444,6 +445,8 @@ class _summary_orderState extends State<summary_order> {
                     constraints: BoxConstraints.tightFor(height: 40, width: double.infinity),
                   child: ElevatedButton(
                     onPressed: () => {
+                      Provider.of<PurchaseModel>(context, listen: false).menuSelected = menusMap,
+                      Provider.of<PurchaseModel>(context, listen: false).pay = payment,
                       Navigator.push(context, MaterialPageRoute(builder: (context) => payment_method()))
                     },
                     child: Text(

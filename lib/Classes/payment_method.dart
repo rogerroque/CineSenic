@@ -22,6 +22,7 @@ class payment_method extends StatelessWidget {
         'points' : 15,
         'image' : Provider.of<PurchaseModel>(context, listen: false).imageUrl
       });
+
     }
 
     return Scaffold(

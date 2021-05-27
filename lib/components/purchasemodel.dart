@@ -9,6 +9,8 @@ class PurchaseModel extends ChangeNotifier {
   var time;
   var imageUrl;
   var date;
+  var discount;
+  var discountedPrice;
 
   void setData(var movieName, var pricePerSeat) {
     this.movieName = movieName;
@@ -54,11 +56,9 @@ class PurchaseModel extends ChangeNotifier {
   }
 
   void applyPromotion(var percentage) {
-    var discount = (percentage / 100);
-    var discountedPrice = pay * discount;
-    print(discount);
-    print(discountedPrice);
-    pay = pay - discountedPrice;
+    discount = (percentage / 100);
+    discountedPrice = pay * discount;
+    pay -= discountedPrice;
     notifyListeners();
   }
 

@@ -62,15 +62,18 @@ class purchase_history extends StatelessWidget {
                                   Text(
                                     reservas[index].movieName,
                                     style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white
+
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       reservas[index].date,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                          fontSize: 15,
+                                          color: Colors.white
                                       ),
                                       textAlign: TextAlign.right,
                                     ),
@@ -87,7 +90,8 @@ class purchase_history extends StatelessWidget {
                                       child: Text(
                                         'Time: ' + reservas[index].time,
                                         style: TextStyle(
-                                          fontSize: 20,
+                                            fontSize: 20,
+                                            color: Colors.white
                                         ),
                                       ),
                                     ),
@@ -96,7 +100,8 @@ class purchase_history extends StatelessWidget {
                                       child: Text(
                                         'Tickets: ' + reservas[index].butacas.length.toString(),
                                         style: TextStyle(
-                                          fontSize: 20,
+                                            fontSize: 20,
+                                            color: Colors.white
                                         ),
                                       ),
                                     ),
@@ -110,7 +115,8 @@ class purchase_history extends StatelessWidget {
                                     child: Text(
                                       'Menus: ' + reservas[index].menus.length.toString(),
                                       style: TextStyle(
-                                        fontSize: 20,
+                                          fontSize: 20,
+                                          color: Colors.white
                                       ),
                                     ),
                                   ),
@@ -120,7 +126,8 @@ class purchase_history extends StatelessWidget {
                                       child: Text(
                                         'Total: ' + reservas[index].total,
                                         style: TextStyle(
-                                          fontSize: 20,
+                                            fontSize: 20,
+                                            color: Colors.white
                                         ),
                                       ),
                                     ),
