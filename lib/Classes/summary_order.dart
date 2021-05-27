@@ -286,10 +286,9 @@ class _summary_orderState extends State<summary_order> {
 
                             String printMenusPrice() {
                               for (var entry in menusMap.entries) {
-                                if (entry.key == menus[index].name) {
                                   double price = double.parse(menus[index].price);
                                   return (price * entry.value).toStringAsFixed(2);
-                                }
+
                               }
                             }
 

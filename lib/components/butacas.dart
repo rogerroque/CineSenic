@@ -34,19 +34,17 @@ class _butacaState extends State<Butacas> {
 
   @override
   Widget build(BuildContext context) {
-    void reserves() {
-      FirebaseFirestore.instance
+    Future<void> reserves() async {
+      await FirebaseFirestore.instance
           .collection("Reservas")
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((result) {
-          print(result.get("date"));
-          print(Provider.of<PurchaseModel>(context, listen: false).date);
           if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
           butacas = result.get("butaca");
-          for (var entry in butacas.entries) {
-            butacasReservadas[entry.key] = entry.value;
-          }
+            for (var entry in butacas.entries) {
+              butacasReservadas[entry.key] = entry.value;
+            }
           }
         });
       });
@@ -79,57 +77,60 @@ class _butacaState extends State<Butacas> {
               );
             }
 
-            return Column(
-              children: snapshot.data.docs.map((document) {
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width / 20),
-                      ),
-                      for (var i = 0; i <= document.data()['ButacasIzq'] - 1; i++)
-                        CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
-                          if (isReserved == false) {
-                            if (isSelected) {
-                              widget.selected[butaca] = true;
-                              print(widget.selected);
-                              Provider.of<PurchaseModel>(context, listen: false)
-                                  .add(widget.price);
-                            } else {
-                              widget.selected.remove(butaca);
-                              print(widget.selected);
-                              Provider.of<PurchaseModel>(context, listen: false)
-                                  .remove(widget.price);
-                            }
-                          }
-                          },
+            if (butacas != null) {
+              return Column(
+                children: snapshot.data.docs.map((document) {
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width / 20),
                         ),
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width / 20) * 2,
-                      ),
-                      for (var i = 0; i <= document.data()['ButacasDer'] - 1; i++)
-                        CinemaSeat(butaca: "fila-der: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-der: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-der: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
-                          if (isReserved == false) {
-                            if (isSelected) {
-                              widget.selected[butaca] = true;
-                              print(widget.selected);
-                              Provider.of<PurchaseModel>(context, listen: false)
-                                  .add(widget.price);
-                            } else {
-                              widget.selected.remove(butaca);
-                              print(widget.selected);
-                              Provider.of<PurchaseModel>(context, listen: false)
-                                  .remove(widget.price);
+                        for (var i = 0; i <= document.data()['ButacasIzq'] - 1; i++)
+                          CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
+                            if (isReserved == false) {
+                              if (isSelected) {
+                                widget.selected[butaca] = true;
+                                print(widget.selected);
+                                Provider.of<PurchaseModel>(context, listen: false)
+                                    .add(widget.price);
+                              } else {
+                                widget.selected.remove(butaca);
+                                print(widget.selected);
+                                Provider.of<PurchaseModel>(context, listen: false)
+                                    .remove(widget.price);
+                              }
                             }
-                          }
                           },
+                          ),
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width / 20) * 2,
                         ),
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width / 20),
-                      ),
-                    ]);
-              }).toList(),
-            );
+                        for (var i = 0; i <= document.data()['ButacasDer'] - 1; i++)
+                          CinemaSeat(butaca: "fila-der: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-der: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-der: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
+                            if (isReserved == false) {
+                              if (isSelected) {
+                                widget.selected[butaca] = true;
+                                print(widget.selected);
+                                Provider.of<PurchaseModel>(context, listen: false)
+                                    .add(widget.price);
+                              } else {
+                                widget.selected.remove(butaca);
+                                print(widget.selected);
+                                Provider.of<PurchaseModel>(context, listen: false)
+                                    .remove(widget.price);
+                              }
+                            }
+                          },
+                          ),
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width / 20),
+                        ),
+                      ]);
+                }).toList(),
+              );
+            }
+            return CircularProgressIndicator();
           }),
     );
   }
