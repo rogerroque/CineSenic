@@ -180,16 +180,9 @@ class _loginState extends State<login> {
                   height: 40.0,
                   onPressed: () async {
                     try {
-                      await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                          email: email, password: password);
-                      if (FirebaseAuth.instance
-                          .idTokenChanges()
-                          .isBroadcast) {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => home()),
-                        );
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                      if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
+                        await Navigator.push(context, MaterialPageRoute(builder: (context) => home()),);
                       }
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {
@@ -222,7 +215,7 @@ class _loginState extends State<login> {
               Container(
                   child: InkWell(
                     onTap: () async {
-                      signInWithGoogle();
+                      await signInWithGoogle();
                       if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
                         Navigator.push(
                           context,

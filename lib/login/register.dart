@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_app/main/home.dart';
 
 import 'login.dart';
@@ -173,9 +174,7 @@ class _registerState extends State<register> {
                     height: 40.0,
                     onPressed: () async {
                       try {
-                        await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: email, password: password);
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
                         await FirebaseAuth.instance.currentUser.updateProfile(displayName: username);
                         if (FirebaseAuth.instance.idTokenChanges().isBroadcast) {
                           Navigator.push(
@@ -185,8 +184,14 @@ class _registerState extends State<register> {
                         }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
+                          Fluttertoast.showToast(
+                              msg: "Contraseña Floja"
+                          );
                           print('The password provided is too weak.');
                         } else if (e.code == 'email-already-in-use') {
+                          Fluttertoast.showToast(
+                              msg: "Esta cuenta ya existe"
+                          );
                           print('The account already exists for that email.');
                         }
                       } catch (e) {
