@@ -39,8 +39,10 @@ class _butacaState extends State<Butacas> {
           .collection("Reservas")
           .get()
           .then((querySnapshot) {
-        querySnapshot.docs.forEach((result) {
-          if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date && result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time && result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
+            querySnapshot.docs.forEach((result) {
+          if (result.get("date") ==  Provider.of<PurchaseModel>(context, listen: false).date &&
+              result.get("time") ==  Provider.of<PurchaseModel>(context, listen: false).time &&
+              result.get("movieName") ==  Provider.of<PurchaseModel>(context, listen: false).movieName) {
           butacas = result.get("butaca");
             for (var entry in butacas.entries) {
               butacasReservadas[entry.key] = entry.value;
@@ -61,6 +63,7 @@ class _butacaState extends State<Butacas> {
       return false;
     }
 
+
     return Padding(
       padding: EdgeInsets.all(5.0),
       child: StreamBuilder<QuerySnapshot>(
@@ -77,8 +80,7 @@ class _butacaState extends State<Butacas> {
               );
             }
 
-            if (butacas != null) {
-              return Column(
+            return Column(
                 children: snapshot.data.docs.map((document) {
                   return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +89,8 @@ class _butacaState extends State<Butacas> {
                           width: (MediaQuery.of(context).size.width / 20),
                         ),
                         for (var i = 0; i <= document.data()['ButacasIzq'] - 1; i++)
-                          CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), isSelected: widget.selected.containsKey("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
+                          CinemaSeat(butaca: "fila-izq: " + document.id + " butaca: " + (i + 1).toString(), isReserved: isReserved("fila-izq: " + document.id + " butaca: " + (i + 1).toString()),
+                            isSelected: widget.selected.containsKey("fila-izq: " + document.id + " butaca: " + (i + 1).toString()), onTap2: (isReserved, isSelected, butaca) {
                             if (isReserved == false) {
                               if (isSelected) {
                                 widget.selected[butaca] = true;
@@ -129,8 +132,6 @@ class _butacaState extends State<Butacas> {
                       ]);
                 }).toList(),
               );
-            }
-            return CircularProgressIndicator();
           }),
     );
   }
